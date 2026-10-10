@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Account - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .auth-wrapper {
+      max-width: 520px;
+      margin: 2.5rem auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="auth-wrapper">
+      <div class="card" style="padding: 2.25rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(247, 127, 0, 0.1); color: var(--accent-saffron); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem;">
+            <i class="fa-solid fa-user-plus"></i>
+          </div>
+          <h2 style="font-size: 1.6rem; color: var(--primary-navy); margin-bottom: 0.25rem;">Create Passenger Account</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Join SmartRail for faster reservations, instant PNR lookups, and AI berth picks.</p>
+        </div>
+
+        <form id="register-form">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label>Full Legal Name *</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="e.g. Ananya Roy" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" id="reg-email" class="form-control" placeholder="name@domain.com" required>
+            </div>
+            <div class="form-group">
+              <label>Mobile Number *</label>
+              <input type="tel" id="reg-phone" class="form-control" placeholder="10-digit mobile" pattern="[0-9]{10}" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="form-group">
+              <label>Create Password *</label>
+              <input type="password" id="reg-password" class="form-control" placeholder="Min 6 characters" minlength="6" required>
+            </div>
+            <div class="form-group">
+              <label>Confirm Password *</label>
+              <input type="password" id="reg-confirm" class="form-control" placeholder="Re-enter password" minlength="6" required>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit-reg" class="btn btn-accent btn-lg" style="width: 100%;">
+            Complete Registration
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          Already have an account? <a href="login.html" style="font-weight: 600;">Sign In Here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirm_password = document.getElementById('reg-confirm').value;
+
+      if (password !== confirm_password) {
+        showToast('Passwords do not match. Please recheck.', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('btn-submit-reg');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...`;
+
+      const res = await fetchApi('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, phone, password, confirm_password })
+      });
+
+      if (!res.success) {
+        btn.disabled = false;
+        btn.textContent = 'Complete Registration';
+        showToast(res.message, 'error', 'Registration Failed');
+        return;
+      }
+
+      setCurrentUser(res.data);
+      showToast('Registration successful! Welcome aboard.', 'success', 'Account Created');
+
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 800);
+    });
+  </script>
+</body>
+</html>

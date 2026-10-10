@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Coach Seat Selection - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/seat-map.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Header with Coach Switcher -->
+    <div class="coach-selection-header">
+      <div class="train-meta-pill">
+        <div>
+          <h2 id="train-header-title" style="font-size: 1.4rem; color: var(--primary-navy);">Loading Train...</h2>
+          <span id="train-header-meta" style="font-size: 0.85rem; color: var(--text-muted);">Please wait</span>
+        </div>
+      </div>
+
+      <div class="coach-controls-container" style="display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-end;">
+        <!-- Class Filter Selector -->
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Class:</span>
+          <div id="class-tabs-container" class="coach-tabs">
+            <!-- Dynamically populated class tabs: 1A, 2A, 3A, SL, etc. -->
+          </div>
+        </div>
+
+        <!-- Coach Selector for Selected Class -->
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Coach:</span>
+          <div id="coach-tabs-container" class="coach-tabs">
+            <!-- Dynamically populated coaches: B1, B2, B3... -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seat Lock Banner -->
+    <div id="seat-lock-banner" class="lock-timer-banner" style="display: none;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <i class="fa-solid fa-lock" style="color: var(--accent-orange); font-size: 1.2rem;"></i>
+        <span>Seats are temporarily held for you. Complete your reservation before timer expires:</span>
+      </div>
+      <div class="timer-countdown">
+        <i class="fa-regular fa-clock"></i>
+        <span id="lock-countdown-display">05:00</span>
+      </div>
+    </div>
+
+    <!-- AI Seat Recommender Bar -->
+    <div class="ai-recommender-panel">
+      <div class="ai-rec-info">
+        <div class="ai-rec-icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div>
+          <h4 style="font-size: 1rem; color: var(--primary-navy); margin-bottom: 2px;">AI Seat Recommender</h4>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Machine Learning berth optimization based on comfort heuristics & passenger profile</span>
+        </div>
+      </div>
+
+      <div class="ai-filters">
+        <select id="ai-passenger-type" class="form-control" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+          <option value="general">Profile: General</option>
+          <option value="elderly">Profile: Senior Citizen (Lower Berth)</option>
+          <option value="solo">Profile: Solo Traveler (Privacy)</option>
+          <option value="family">Profile: Family Group</option>
+        </select>
+
+        <select id="ai-berth-preference" class="form-control" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+          <option value="WINDOW">Preference: Window View</option>
+          <option value="LOWER">Preference: Lower Berth</option>
+          <option value="AISLE">Preference: Aisle Corridor</option>
+          <option value="UPPER">Preference: Upper Berth</option>
+        </select>
+
+        <button id="btn-run-ai-rec" class="btn btn-sm btn-primary">
+          <i class="fa-solid fa-sparkles"></i> Get AI Picks
+        </button>
+      </div>
+    </div>
+
+    <!-- Active AI Rationale Banner & Ranked Recommendations -->
+    <div id="ai-rec-banner" style="display: none; background: linear-gradient(135deg, rgba(121, 40, 202, 0.08) 0%, rgba(255, 0, 128, 0.05) 100%); border: 1.5px solid rgba(121, 40, 202, 0.3); border-left: 5px solid #7928ca; padding: 0.85rem 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div style="flex: 1; min-width: 280px;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 4px;">
+          <span class="badge" style="background: #7928ca; color: white; font-size: 0.75rem;"><i class="fa-solid fa-sparkles"></i> Top AI Match</span>
+          <span id="ai-rec-eval-count" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;"></span>
+        </div>
+        <span id="ai-rec-text" style="font-size: 0.9rem; color: var(--text-primary);"></span>
+      </div>
+      <div>
+        <button id="btn-view-all-recs" class="btn btn-sm btn-outline" style="border-color: #7928ca; color: #7928ca; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;" onclick="openAllRecommendationsModal()">
+          <i class="fa-solid fa-list-ol"></i> View All AI Recommendations (<span id="all-recs-count">0</span>)
+        </button>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="seat-legend">
+      <div class="legend-item">
+        <div class="legend-swatch swatch-available"></div>
+        <span>Available</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-selected"></div>
+        <span>Selected / Locked by You</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-occupied"></div>
+        <span>Occupied</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-locked"></div>
+        <span>Held by Other User</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-recommended"></div>
+        <span>AI Recommended ✨</span>
+      </div>
+    </div>
+
+    <!-- Coach Layout Render Target -->
+    <div id="seat-map-render-target">
+      <!-- Injected by seat-selection.js -->
+    </div>
+  </main>
+
+  <!-- Sticky Action Footer -->
+  <div class="seat-action-footer">
+    <div class="seat-action-container">
+      <div class="selected-summary">
+        <div class="summary-pill">
+          <span>Passengers</span>
+          <strong id="selected-count-val">0</strong>
+        </div>
+        <div class="summary-pill">
+          <span>Allocated Berths</span>
+          <strong id="selected-seats-list" style="font-size: 1rem;">None Selected</strong>
+        </div>
+        <div class="summary-pill">
+          <span>Base Total</span>
+          <strong id="selected-total-fare" style="color: var(--primary-navy);">₹0.00</strong>
+        </div>
+      </div>
+
+      <div>
+        <button id="btn-proceed-booking" class="btn btn-accent btn-lg" onclick="proceedToBooking()" disabled>
+          Continue to Booking <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  <!-- Modal: Ranked AI Seat Recommendations Modal -->
+  <div id="ai-recs-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-dialog" style="max-width: 680px; width: 95%;">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-size: 1.2rem; margin: 0; color: var(--primary-navy); display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color: #7928ca;"></i> All AI Seat Recommendations
+          </h3>
+          <p id="ai-modal-subtitle" style="font-size: 0.82rem; color: var(--text-muted); margin: 3px 0 0;">
+            Comprehensive ranked evaluation of available berths
+          </p>
+        </div>
+        <button class="btn btn-sm btn-outline" style="padding: 0.2rem 0.6rem; border-radius: var(--radius-sm);" onclick="closeAllRecommendationsModal()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="ai-recs-modal-body" style="padding: 1rem 1.5rem; max-height: 65vh; overflow-y: auto;">
+        <!-- Injected list of ranked seats -->
+      </div>
+      <div class="modal-footer" style="padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.8rem; color: var(--text-muted);">
+          Clicking any recommendation selects and locks that berth.
+        </span>
+        <button class="btn btn-sm btn-outline" onclick="closeAllRecommendationsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/seat-selection.js"></script>
+</body>
+</html>

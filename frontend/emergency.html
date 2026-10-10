@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency SOS & RPF Assistance - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .emergency-type-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .emergency-type-card:hover {
+      border-color: var(--accent-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(230, 57, 70, 0.15);
+    }
+    .emergency-type-card.selected {
+      border-color: var(--accent-red);
+      background: #fff5f5;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+    }
+    .emergency-type-card.cleaning-type-card:hover {
+      border-color: #2a9d8f;
+      box-shadow: 0 4px 12px rgba(42, 157, 143, 0.15);
+    }
+    .emergency-type-card.cleaning-type-card.selected {
+      border-color: #2a9d8f;
+      background: #f0fdf4;
+      box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2);
+    }
+    .emergency-type-card.tte-type-card:hover {
+      border-color: var(--accent-saffron, #f77f00);
+      box-shadow: 0 4px 12px rgba(247, 127, 0, 0.15);
+    }
+    .emergency-type-card.tte-type-card.selected {
+      border-color: var(--accent-saffron, #f77f00);
+      background: #fffdf5;
+      box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.2);
+    }
+    .emergency-type-card.luggage-type-card:hover {
+      border-color: #2563eb;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+    .emergency-type-card.luggage-type-card.selected {
+      border-color: #2563eb;
+      background: #eff6ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    .emergency-icon-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(230, 57, 70, 0.1);
+      color: var(--accent-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 1rem;
+    }
+    .cleaning-icon-circle {
+      background: rgba(42, 157, 143, 0.12) !important;
+      color: #2a9d8f !important;
+    }
+    .tte-icon-circle {
+      background: rgba(247, 127, 0, 0.12) !important;
+      color: var(--accent-saffron, #f77f00) !important;
+    }
+    .luggage-icon-circle {
+      background: rgba(37, 99, 235, 0.12) !important;
+      color: #2563eb !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="active nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div style="text-align: center; max-width: 720px; margin: 1rem auto 2.5rem;">
+      <span class="badge" style="background: rgba(230, 57, 70, 0.15); color: var(--accent-red); font-size: 0.85rem; padding: 0.35rem 0.85rem; margin-bottom: 0.75rem;">
+        <i class="fa-solid fa-shield-halved"></i> RAILWAY PROTECTION FORCE & RAILMADAD 139
+      </span>
+      <h1 style="font-size: 2.2rem; color: var(--primary-navy); margin-bottom: 0.5rem;">Emergency Assistance & Passenger Services</h1>
+      <p style="color: var(--text-secondary);">Select the nature of assistance to alert the Train Superintendent, RPF squad, or on-board coach housekeeping staff.</p>
+    </div>
+
+    <!-- Emergency & Service Category Cards -->
+    <div class="emergency-grid">
+      <div class="emergency-type-card selected" data-type="Medical Emergency" data-mode="emergency">
+        <div class="emergency-icon-circle"><i class="fa-solid fa-kit-medical"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Medical Help</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Doctor at next halt</span>
+      </div>
+
+      <div class="emergency-type-card" data-type="Women Safety" data-mode="emergency">
+        <div class="emergency-icon-circle"><i class="fa-solid fa-person-dress"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Women Safety</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Dedicated RPF Escort</span>
+      </div>
+
+      <div class="emergency-type-card" data-type="RPF Police / Crime" data-mode="emergency">
+        <div class="emergency-icon-circle"><i class="fa-solid fa-handcuffs"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">RPF Security</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Theft / Harassment</span>
+      </div>
+
+      <div class="emergency-type-card" data-type="Fire / Smoke" data-mode="emergency">
+        <div class="emergency-icon-circle"><i class="fa-solid fa-fire-extinguisher"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Fire Hazard</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Coach fire alarm</span>
+      </div>
+
+      <div class="emergency-type-card" data-type="Train Operations" data-mode="emergency">
+        <div class="emergency-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Coach Fault</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">AC / Water / Door issue</span>
+      </div>
+
+      <!-- Coach Cleaning Category Card -->
+      <div class="emergency-type-card cleaning-type-card" data-type="Coach Cleaning" data-mode="cleaning">
+        <div class="emergency-icon-circle cleaning-icon-circle"><i class="fa-solid fa-broom"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Coach Cleaning</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Request coach cleaning</span>
+      </div>
+
+      <!-- Contact TTE / Train Staff Category Card -->
+      <div class="emergency-type-card tte-type-card" data-type="Contact TTE / Train Staff" data-mode="tte">
+        <div class="emergency-icon-circle tte-icon-circle"><i class="fa-solid fa-ticket"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Contact TTE / Train Staff</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">On-board ticket & passenger assistance</span>
+      </div>
+
+      <!-- Left Luggage Category Card -->
+      <div class="emergency-type-card luggage-type-card" data-type="Left Luggage" data-mode="luggage">
+        <div class="emergency-icon-circle luggage-icon-circle"><i class="fa-solid fa-suitcase-rolling"></i></div>
+        <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Left Luggage</h4>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Forgot luggage in the train</span>
+      </div>
+    </div>
+
+    <!-- Request Details Input Form -->
+    <div class="card" style="max-width: 820px; margin: 0 auto; padding: 2rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <h3 style="font-size: 1.25rem; color: var(--primary-navy);">
+          Selected Protocol: <span id="display-selected-type" style="color: var(--accent-red);">Medical Emergency</span>
+        </h3>
+        <span class="badge badge-cancelled" id="display-priority-badge">HIGH PRIORITY TICKET</span>
+      </div>
+
+      <!-- Emergency & Cleaning Form Container (Active for emergency / cleaning modes) -->
+      <div id="emergency-form-container">
+        <!-- Dedicated Cleaning Issue Dropdown (Visible only in Cleaning mode) -->
+        <div class="form-group" id="cleaning-issue-group" style="display: none; margin-bottom: 1.25rem;">
+          <label>Cleaning Issue *</label>
+          <select id="input-cleaning-issue" class="form-control">
+            <option value="Coach floor dirty">Coach floor dirty</option>
+            <option value="Washroom / Toilet unhygienic" selected>Washroom / Toilet unhygienic</option>
+            <option value="Dustbin full / overflowing">Dustbin full / overflowing</option>
+            <option value="Seat / Berth stained or dirty">Seat / Berth stained or dirty</option>
+            <option value="Bad odor / smell in coach">Bad odor / smell in coach</option>
+            <option value="Spilled liquid / food waste">Spilled liquid / food waste</option>
+            <option value="Other cleaning request">Other cleaning request</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Train Number *</label>
+            <input type="text" id="input-sos-train" class="form-control" placeholder="e.g. 12952" value="12952" required>
+          </div>
+          <div class="form-group">
+            <label>Coach Number *</label>
+            <input type="text" id="input-sos-coach" class="form-control" placeholder="e.g. B1" value="B1" required>
+          </div>
+          <div class="form-group">
+            <label id="lbl-sos-seat">Seat Number *</label>
+            <input type="text" id="input-sos-seat" class="form-control" placeholder="e.g. 14" value="14">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Passenger Name</label>
+            <input type="text" id="input-sos-name" class="form-control" placeholder="Passenger name" value="Rahul Sharma">
+          </div>
+          <div class="form-group">
+            <label>Contact Mobile *</label>
+            <input type="tel" id="input-sos-phone" class="form-control" placeholder="10-digit mobile" value="9812345678" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label id="lbl-sos-desc">Describe the Emergency Situation *</label>
+          <textarea id="input-sos-desc" class="form-control" rows="3" placeholder="Provide key details so attending staff can arrive prepared..." required>Passenger feeling severe dizziness and requiring immediate doctor assistance at next halt.</textarea>
+        </div>
+
+        <button type="button" id="btn-trigger-sos" class="btn btn-danger btn-lg" style="width: 100%; font-size: 1.15rem; padding: 1rem;">
+          <i class="fa-solid fa-bullhorn"></i> DISPATCH EMERGENCY SOS (RPF 139)
+        </button>
+
+        <p id="notice-protocol-text" style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+          * Demo Notice: Alerts generated here are logged to MySQL/SQLite and simulated for demonstration purposes without contacting real police authorities.
+        </p>
+      </div>
+
+      <!-- Dedicated TTE Assistance Form Container (Active only when TTE mode selected) -->
+      <div id="tte-form-container" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Train Number *</label>
+            <input type="text" id="input-tte-train" class="form-control" placeholder="e.g. 12952" value="12952" required>
+            <div id="tte-train-info-badge" style="font-size: 0.82rem; margin-top: 5px; color: var(--accent-green, #2a9d8f); font-weight: 600; display: none;"></div>
+          </div>
+          <div class="form-group">
+            <label>Journey Date *</label>
+            <input type="date" id="input-tte-date" class="form-control" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Coach <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+            <input type="text" id="input-tte-coach" class="form-control" placeholder="e.g. S5 or B2">
+          </div>
+          <div class="form-group">
+            <label>Berth / Seat <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+            <input type="text" id="input-tte-berth" class="form-control" placeholder="e.g. 36 or 42">
+          </div>
+          <div class="form-group">
+            <label>PNR <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional, 10 digits)</span></label>
+            <input type="text" id="input-tte-pnr" class="form-control" placeholder="e.g. 8234567890" maxlength="10">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label>Assistance Type *</label>
+          <select id="input-tte-type" class="form-control" required>
+            <option value="Berth / Seat Issue" selected>Berth / Seat Issue</option>
+            <option value="RAC Assistance">RAC Assistance</option>
+            <option value="Ticket Verification">Ticket Verification</option>
+            <option value="Wrong Passenger Occupying Berth">Wrong Passenger Occupying Berth</option>
+            <option value="Passenger Dispute">Passenger Dispute</option>
+            <option value="Coach / Berth Assistance">Coach / Berth Assistance</option>
+            <option value="General Onboard Assistance">General Onboard Assistance</option>
+            <option value="Other Passenger Assistance">Other Passenger Assistance</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Description of Issue *</label>
+          <textarea id="input-tte-desc" class="form-control" rows="3" placeholder="Please describe your onboard seat, berth, ticket, or passenger assistance requirement in detail..." required></textarea>
+        </div>
+
+        <button type="button" id="btn-submit-tte" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.15rem; padding: 1rem; background: var(--accent-saffron, #f77f00); border-color: var(--accent-saffron, #f77f00); color: white;">
+          <i class="fa-solid fa-ticket"></i> Request TTE Assistance
+        </button>
+
+        <div style="background: rgba(247, 127, 0, 0.08); border-left: 4px solid var(--accent-saffron, #f77f00); padding: 0.9rem 1.1rem; border-radius: var(--radius-sm); margin-top: 1.25rem;">
+          <p id="notice-tte-text" style="font-size: 0.82rem; color: var(--text-primary); margin: 0; line-height: 1.45;">
+            <strong><i class="fa-solid fa-circle-info"></i> Notice:</strong> Your assistance request has been recorded in SmartRail. For immediate onboard assistance, please contact the TTE/train staff directly or use Railway Helpline 139.
+          </p>
+        </div>
+      </div>
+
+      <!-- Dedicated Left Luggage Form Container (Active only when Luggage mode selected) -->
+      <div id="luggage-form-container" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Train Number *</label>
+            <input type="text" id="input-luggage-train" class="form-control" placeholder="e.g. 12956" value="12956" required>
+            <div id="luggage-train-info-badge" style="font-size: 0.82rem; margin-top: 5px; color: #2563eb; font-weight: 600; display: none;"></div>
+          </div>
+          <div class="form-group">
+            <label>Journey Date *</label>
+            <input type="date" id="input-luggage-date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>PNR <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional, 10 digits)</span></label>
+            <input type="text" id="input-luggage-pnr" class="form-control" placeholder="e.g. 1234567890" maxlength="10">
+            <div id="luggage-pnr-info-badge" style="font-size: 0.82rem; margin-top: 5px; color: var(--accent-green, #2a9d8f); font-weight: 600; display: none;"></div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Coach Number *</label>
+            <input type="text" id="input-luggage-coach" class="form-control" placeholder="e.g. B2" required>
+          </div>
+          <div class="form-group">
+            <label>Seat / Berth Number *</label>
+            <input type="text" id="input-luggage-seat" class="form-control" placeholder="e.g. 45" required>
+          </div>
+          <div class="form-group">
+            <label>Passenger Mobile Number *</label>
+            <input type="tel" id="input-luggage-mobile" class="form-control" placeholder="10-digit mobile" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div class="form-group">
+            <label>Boarding Station <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+            <input type="text" id="input-luggage-boarding" class="form-control" placeholder="e.g. MMCT / Mumbai Central">
+          </div>
+          <div class="form-group">
+            <label>Deboarding Station *</label>
+            <input type="text" id="input-luggage-deboarding" class="form-control" placeholder="e.g. JP / Jaipur Jn" required>
+          </div>
+          <div class="form-group">
+            <label>Train Name <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+            <input type="text" id="input-luggage-train-name" class="form-control" placeholder="e.g. Jaipur Superfast Express">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label>Luggage Description *</label>
+          <input type="text" id="input-luggage-desc" class="form-control" placeholder="e.g. Black American Tourister trolley bag" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.25rem;">
+          <label>Luggage Contents <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+          <input type="text" id="input-luggage-contents" class="form-control" placeholder="e.g. Clothes, documents, laptop charger, etc.">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+          <label>Additional Details <span style="font-size: 0.8rem; color: var(--text-muted);">(Optional)</span></label>
+          <textarea id="input-luggage-details" class="form-control" rows="2" placeholder="e.g. Left the bag under the lower berth after getting down at Jaipur."></textarea>
+        </div>
+
+        <button type="button" id="btn-submit-luggage" class="btn btn-primary btn-lg" style="width: 100%; font-size: 1.15rem; padding: 1rem; background: #2563eb; border-color: #2563eb; color: white;">
+          <i class="fa-solid fa-suitcase-rolling"></i> Register Left Luggage Assistance
+        </button>
+
+        <div style="background: rgba(37, 99, 235, 0.08); border-left: 4px solid #2563eb; padding: 0.9rem 1.1rem; border-radius: var(--radius-sm); margin-top: 1.25rem;">
+          <p id="notice-luggage-text" style="font-size: 0.82rem; color: var(--text-primary); margin: 0; line-height: 1.45;">
+            <strong><i class="fa-solid fa-circle-info"></i> Important Safety Note:</strong> SmartRail records and manages your forgotten luggage request for railway coordination. For immediate assistance, contact <strong>Railway Helpline 139</strong> or the onboard railway/RPF staff and provide your SmartRail Request ID.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Receipt Target -->
+    <div id="sos-receipt-container" style="max-width: 820px; margin: 0 auto;"></div>
+
+    <!-- Track Incident / Request Section -->
+    <div class="card" style="max-width: 820px; margin: 3rem auto 0; background: var(--bg-slate);">
+      <h4 style="font-size: 1.05rem; color: var(--primary-navy); margin-bottom: 0.5rem;">Track Existing Request or Incident</h4>
+      <form id="track-incident-form" style="display: flex; gap: 0.75rem;">
+        <input type="text" id="input-incident-id" class="form-control" placeholder="Enter Request or Incident ID (e.g. LUG-20261007-00124, TTE-20261005-00124, CLR-20260926-001, or SOS-2026-0091)" required>
+        <button type="submit" class="btn btn-primary">Track Status</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- SOS Confirmation Modal -->
+  <div class="modal-overlay" id="sos-confirm-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-red); font-size: 1.2rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Confirm SOS Broadcast
+        </h3>
+        <button onclick="closeSosModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 1rem; font-size: 0.95rem;">
+          You are about to broadcast an active emergency to the Railway Control Room:
+        </p>
+        <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+          <div><strong>Category:</strong> <span id="sos-modal-type" style="color: var(--accent-red);">--</span></div>
+          <div><strong>Train:</strong> <span id="sos-modal-train">--</span></div>
+          <div><strong>Position:</strong> <span id="sos-modal-seat">--</span></div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+          RPF personnel and on-board medical staff will be alerted immediately.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeSosModal()" class="btn btn-outline">Cancel</button>
+        <button id="btn-confirm-sos-dispatch" class="btn btn-danger">
+          CONFIRM & DISPATCH
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/emergency.js"></script>
+</body>
+</html>

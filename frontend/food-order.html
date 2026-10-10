@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Order - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .food-hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 60%, var(--primary-blue) 100%);
+      color: white;
+      padding: 3rem 1.5rem 3.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .food-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(247, 127, 0, 0.2);
+      border: 1px solid rgba(247, 127, 0, 0.5);
+      color: var(--accent-gold);
+      padding: 0.4rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .food-hero h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .food-hero p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    
+    .food-search-card {
+      background: white;
+      max-width: 800px;
+      margin: -2rem auto 2.5rem;
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-light);
+      position: relative;
+      z-index: 10;
+    }
+    .food-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-light);
+      margin-bottom: 1.25rem;
+    }
+    .food-tab-btn {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: var(--transition-fast);
+    }
+    .food-tab-btn.active {
+      color: var(--primary-navy);
+      border-bottom-color: var(--accent-saffron);
+    }
+
+    /* Journey Summary Banner */
+    .journey-banner {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .journey-info h3 {
+      font-size: 1.2rem;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .journey-route {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-top: 0.25rem;
+    }
+    .passenger-badge {
+      background: rgba(42, 157, 143, 0.1);
+      border: 1px solid rgba(42, 157, 143, 0.3);
+      color: #1b685f;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+    }
+
+    /* Route Halt Timeline Selector */
+    .halt-selector-container {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+    }
+    .halt-track {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 1rem 0.5rem 0.5rem;
+      scrollbar-width: thin;
+    }
+    .halt-card {
+      flex: 0 0 200px;
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fafbfc;
+      position: relative;
+    }
+    .halt-card:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .halt-card.selected {
+      border-color: var(--accent-saffron);
+      background: #fff9f2;
+      box-shadow: 0 0 0 3px rgba(247, 127, 0, 0.2);
+    }
+    .halt-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .halt-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary-navy);
+      margin-bottom: 0.25rem;
+    }
+    .halt-timing {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .halt-food-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-full);
+      margin-top: 0.5rem;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    /* Layout for Food Ordering */
+    .food-main-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .food-main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Restaurant Cards */
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .restaurant-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .restaurant-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+    .restaurant-img {
+      height: 140px;
+      width: 100%;
+      object-fit: cover;
+      background: #eee;
+    }
+    .restaurant-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .restaurant-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 0.25rem;
+    }
+    .restaurant-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .restaurant-badges {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .veg-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+    }
+    .veg-only {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+    .veg-nonveg {
+      background: #fff3e0;
+      color: #e65100;
+      border: 1px solid #ffe0b2;
+    }
+
+    /* Menu Section */
+    .menu-categories {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0 1rem;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 1.5rem;
+    }
+    .category-pill {
+      background: white;
+      border: 1px solid var(--border-light);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .category-pill.active {
+      background: var(--primary-navy);
+      color: white;
+      border-color: var(--primary-navy);
+    }
+
+    .dish-card {
+      background: white;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: var(--transition-fast);
+    }
+    .dish-card:hover {
+      box-shadow: var(--shadow-sm);
+    }
+    .dish-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+    .dish-icon.veg {
+      border: 2px solid #2e7d32;
+      color: #2e7d32;
+    }
+    .dish-icon.non-veg {
+      border: 2px solid #c62828;
+      color: #c62828;
+    }
+    .dish-details {
+      flex: 1;
+    }
+    .dish-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+    .dish-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .dish-price {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+    }
+    .dish-img {
+      width: 85px;
+      height: 85px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+    }
+    .add-btn {
+      padding: 0.4rem 1.1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: var(--radius-md);
+    }
+
+    /* Cart Sidebar */
+    .cart-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      position: sticky;
+      top: 90px;
+    }
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .cart-items-list {
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f1f5f9;
+      border-radius: var(--radius-sm);
+      padding: 0.15rem 0.4rem;
+    }
+    .qty-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--primary-blue);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0 0.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-item">
+        <i class="fa-solid fa-phone-volume"></i> 24&times;7 Railway Helpline: <strong>139</strong>
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item">
+        <i class="fa-solid fa-utensils"></i> Authorised Railway e-Catering Partners
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item top-bar-security">
+        <i class="fa-solid fa-shield-halved"></i> 100% Hygienic Meal Guarantee
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container nav-three-section">
+      <div class="nav-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="fa-solid fa-train-subway"></i>
+          <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+          <span class="brand-tag">Food</span>
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html" class="active"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="nav-auth" id="nav-auth-container"></div>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="food-hero">
+    <div class="food-hero-badge">
+      <i class="fa-solid fa-bowl-food"></i> e-Catering On-Board Delivery
+    </div>
+    <h1>SmartRail Food Order</h1>
+    <p>Order food from authorised railway e-catering partners and restaurants during your journey.</p>
+  </header>
+
+  <!-- Search Card -->
+  <div class="food-search-card">
+    <div class="food-tabs">
+      <button class="food-tab-btn active" id="tab-pnr" onclick="switchFoodTab('pnr')">
+        <i class="fa-solid fa-ticket"></i> Order by PNR Number
+      </button>
+      <button class="food-tab-btn" id="tab-train" onclick="switchFoodTab('train')">
+        <i class="fa-solid fa-train"></i> Order by Train & Date
+      </button>
+    </div>
+
+    <!-- PNR Search Form -->
+    <form id="food-pnr-form" onsubmit="handlePnrSearch(event)">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 260px;">
+          <input type="text" id="food-pnr-input" class="form-control" placeholder="Enter 10-digit PNR (e.g. 2846190532)" maxlength="10" required>
+        </div>
+        <button type="submit" class="btn btn-accent" id="btn-pnr-search">
+          <i class="fa-solid fa-magnifying-glass"></i> Find My Train & Halts
+        </button>
+      </div>
+      <small style="color: var(--text-muted); display: block; margin-top: 0.5rem;">
+        Demo PNRs: <a href="javascript:void(0)" onclick="fillDemoPnr('2846190532')">2846190532</a>, <a href="javascript:void(0)" onclick="fillDemoPnr('4198273641')">4198273641</a>
+      </small>
+    </form>
+
+    <!-- Train & Date Form -->
+    <form id="food-train-form" onsubmit="handleTrainSearch(event)" style="display: none;">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 180px;">
+          <input type="text" id="food-train-input" class="form-control" placeholder="Train # (e.g. 12952, 12956)" required>
+        </div>
+        <div style="flex: 1; min-width: 180px;">
+          <input type="date" id="food-date-input" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-accent" id="btn-train-search">
+          <i class="fa-solid fa-route"></i> Retrieve Route Halts
+        </button>
+      </div>
+      <small style="color: var(--text-muted); display: block; margin-top: 0.5rem;">
+        Sample trains: <a href="javascript:void(0)" onclick="fillDemoTrain('12952')">12952 (Tejas Rajdhani)</a>, <a href="javascript:void(0)" onclick="fillDemoTrain('12956')">12956 (JP MMCT SF EXP)</a>
+      </small>
+    </form>
+  </div>
+
+  <!-- Authorised IRCTC eCatering Partners Showcase -->
+  <section class="container" style="margin-bottom: 2rem;">
+    <div class="partner-showcase-section">
+      <div class="showcase-header">
+        <div class="showcase-title-area">
+          <h2><i class="fa-solid fa-utensils" style="color: var(--accent-saffron);"></i> IRCTC eCatering Partners & Food Brands</h2>
+          <p>Order food from authorised railway e-catering partners and restaurants during your journey.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="badge" style="background: rgba(42, 157, 143, 0.12); color: #1b685f; font-weight: 600;">
+            <i class="fa-solid fa-circle-check"></i> Authorised Network
+          </span>
+        </div>
+      </div>
+
+      <!-- Partner Category Filter Bar -->
+      <div class="partner-filter-bar" id="partner-filter-bar">
+        <button class="partner-filter-pill active" data-category="All" onclick="filterPartnersByCategory('All')">
+          <i class="fa-solid fa-border-all"></i> All Partners
+        </button>
+        <button class="partner-filter-pill" data-category="IRCTC eCatering" onclick="filterPartnersByCategory('IRCTC eCatering')">
+          <i class="fa-solid fa-train-subway"></i> IRCTC eCatering
+        </button>
+        <button class="partner-filter-pill" data-category="Pizza" onclick="filterPartnersByCategory('Pizza')">
+          <i class="fa-solid fa-pizza-slice"></i> Pizza
+        </button>
+        <button class="partner-filter-pill" data-category="Indian" onclick="filterPartnersByCategory('Indian')">
+          <i class="fa-solid fa-bowl-rice"></i> Indian
+        </button>
+        <button class="partner-filter-pill" data-category="Biryani" onclick="filterPartnersByCategory('Biryani')">
+          <i class="fa-solid fa-fire-burner"></i> Biryani
+        </button>
+        <button class="partner-filter-pill" data-category="Fast Food" onclick="filterPartnersByCategory('Fast Food')">
+          <i class="fa-solid fa-burger"></i> Fast Food
+        </button>
+        <button class="partner-filter-pill" data-category="South Indian" onclick="filterPartnersByCategory('South Indian')">
+          <i class="fa-solid fa-mortar-pestle"></i> South Indian
+        </button>
+        <button class="partner-filter-pill" data-category="Vegetarian" onclick="filterPartnersByCategory('Vegetarian')">
+          <i class="fa-solid fa-leaf"></i> Vegetarian
+        </button>
+        <button class="partner-filter-pill" data-category="Non-Vegetarian" onclick="filterPartnersByCategory('Non-Vegetarian')">
+          <i class="fa-solid fa-drumstick-bite"></i> Non-Vegetarian
+        </button>
+        <button class="partner-filter-pill" data-category="Desserts" onclick="filterPartnersByCategory('Desserts')">
+          <i class="fa-solid fa-ice-cream"></i> Desserts
+        </button>
+        <button class="partner-filter-pill" data-category="Beverages" onclick="filterPartnersByCategory('Beverages')">
+          <i class="fa-solid fa-mug-hot"></i> Beverages
+        </button>
+      </div>
+
+      <!-- Partner Cards Grid (Populated dynamically by food_order.js) -->
+      <div id="partner-cards-container">
+        <div class="partner-grid-featured" id="partner-featured-grid">
+          <!-- Featured 4 partners -->
+        </div>
+        <div class="partner-grid-more" id="partner-more-grid" style="display: none;">
+          <!-- Secondary partners -->
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1.25rem;">
+        <button class="btn btn-outline btn-sm" id="btn-toggle-more-partners" onclick="toggleMorePartners()">
+          <i class="fa-solid fa-chevron-down" id="toggle-partners-icon"></i> <span id="toggle-partners-text">Show All Partners (Zoop, RailYatri, Haldiram's, Comesum, etc.)</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" id="food-container" style="display: none;">
+
+    <!-- Journey Details Banner -->
+    <div class="journey-banner" id="journey-banner">
+      <div class="journey-info">
+        <h3 id="jb-train-title"><i class="fa-solid fa-train"></i> Train Info Loading...</h3>
+        <div class="journey-route" id="jb-route">Route info...</div>
+      </div>
+      <div id="jb-passenger" class="passenger-badge">
+        <i class="fa-solid fa-user-check"></i> Passenger Info
+      </div>
+      <div id="jb-live" style="font-size: 0.85rem; color: var(--text-muted);">
+        <!-- Live tracking status -->
+      </div>
+    </div>
+
+    <!-- Step 1: Select Delivery Station on Route -->
+    <section class="halt-selector-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+        <div>
+          <h2 style="font-size: 1.3rem; color: var(--primary-navy); margin-bottom: 0.2rem;">
+            <i class="fa-solid fa-location-dot" style="color: var(--accent-saffron);"></i> 1. Select Delivery Station
+          </h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Food will only be delivered at verified scheduled halts where authorized catering partners operate.
+          </p>
+        </div>
+        <div id="selected-halt-badge" style="display: none; background: #fff3e0; color: #e65100; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: var(--radius-full); font-size: 0.85rem; border: 1px solid #ffe0b2;">
+          Delivering at: <span id="sh-name">-</span>
+        </div>
+      </div>
+
+      <!-- Halts Carousel Track -->
+      <div class="halt-track" id="halt-track">
+        <!-- Rendered by food_order.js -->
+      </div>
+    </section>
+
+    <!-- Step 2: Main Layout (Restaurants / Menu + Cart) -->
+    <div class="food-main-layout">
+      <!-- Left Column: Vendors or Menu -->
+      <div>
+        <!-- Vendor Listing Section -->
+        <div id="vendor-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 style="font-size: 1.25rem; color: var(--primary-navy);" id="vendor-heading">
+              Available Restaurants
+            </h2>
+            <span class="badge" style="background: rgba(19, 64, 116, 0.08); color: var(--primary-navy);" id="vendor-count-badge">
+              0 Vendors
+            </span>
+          </div>
+
+          <div class="restaurant-grid" id="restaurant-grid">
+            <!-- Rendered by food_order.js -->
+          </div>
+        </div>
+
+        <!-- Menu Section (Visible after clicking View Menu) -->
+        <div id="menu-section" style="display: none;">
+          <div style="background: white; border-radius: var(--radius-lg); padding: 1.25rem; border: 1px solid var(--border-light); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <button class="btn btn-sm btn-outline" onclick="backToRestaurants()">
+                <i class="fa-solid fa-arrow-left"></i> Change Restaurant
+              </button>
+              <h3 style="margin-top: 0.5rem; font-size: 1.2rem; color: var(--primary-navy);" id="menu-restaurant-name">Restaurant Menu</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted);" id="menu-restaurant-cuisine">Cuisine</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <label style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+                <input type="checkbox" id="veg-toggle" onchange="toggleVegOnly()">
+                <span class="dish-icon veg" style="width: 14px; height: 14px; font-size: 8px;">●</span> Pure Veg Only
+              </label>
+            </div>
+          </div>
+
+          <!-- Category Tabs -->
+          <div class="menu-categories" id="menu-categories">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Dishes Container -->
+          <div id="dishes-container">
+            <!-- Rendered by food_order.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Cart Tray -->
+      <div>
+        <div class="cart-card">
+          <div class="cart-header">
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--primary-navy);">
+                <i class="fa-solid fa-bag-shopping" style="color: var(--accent-saffron);"></i> Your Food Tray
+              </h3>
+              <small style="color: var(--text-muted);" id="cart-station-label">Select station & items</small>
+            </div>
+            <button class="btn btn-sm" style="background: none; color: var(--accent-red); padding: 0;" onclick="clearCart()">
+              Clear
+            </button>
+          </div>
+
+          <div class="cart-items-list" id="cart-items-list">
+            <div style="text-align: center; color: var(--text-muted); padding: 2rem 0;">
+              <i class="fa-solid fa-utensils" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0.5rem; display: block;"></i>
+              Your tray is currently empty.
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-light); padding-top: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.35rem;">
+              <span style="color: var(--text-muted);">Item Subtotal</span>
+              <span style="font-weight: 600;" id="cart-subtotal">₹0.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.5rem;">
+              <span style="color: var(--text-muted);">Station Berth Delivery</span>
+              <span style="font-weight: 600;" id="cart-delivery-fee">₹20.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; color: var(--primary-navy); border-top: 2px dashed var(--border-light); padding-top: 0.5rem; margin-bottom: 1.25rem;">
+              <span>Total Payable</span>
+              <span id="cart-total" style="color: var(--accent-saffron);">₹0.00</span>
+            </div>
+
+            <button class="btn btn-accent btn-block btn-lg" id="btn-checkout" onclick="proceedToCheckout()" disabled>
+              Proceed to Delivery <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Trust & eCatering Disclaimer -->
+  <div class="container" style="margin-bottom: 3rem;">
+    <div class="trust-disclaimer-box">
+      <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+        <i class="fa-solid fa-shield-halved" style="color: var(--accent-saffron); font-size: 1.25rem; margin-top: 0.2rem; flex-shrink: 0;"></i>
+        <div>
+          <strong style="color: var(--primary-navy); display: block; margin-bottom: 0.25rem;">Official eCatering Notice & Disclaimer</strong>
+          <p style="margin: 0; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;">
+            SmartRail is an educational railway reservation project interface. On-board food orders are fulfilled by authorized railway catering partners and verified restaurant brands. For official direct IRCTC eCatering booking, visit the government portal: <a href="https://www.ecatering.irctc.co.in/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-blue); font-weight: 600; text-decoration: underline;">https://www.ecatering.irctc.co.in/</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: 4rem;">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <div class="footer-logo">SmartRail</div>
+        <p class="footer-desc">National Railway Ticket & e-Catering Food Ordering System. Fresh hot meals delivered to your train berth at major railway junctions.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Food Services</h4>
+        <ul class="footer-links">
+          <li><a href="food-order.html">Order Food on Train</a></li>
+          <li><a href="food-order-tracking.html">Track Active Food Order</a></li>
+          <li><a href="pnr-status.html">PNR Meal Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Passenger Safety</h4>
+        <ul class="footer-links">
+          <li><a href="emergency.html">Emergency SOS (139)</a></li>
+          <li><a href="live-tracking.html">Live GPS Movement</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/food_order.js"></script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations & Analytics Dashboard - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+        <span class="brand-tag" style="background: var(--accent-red);">ADMIN</span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="admin-dashboard.html" class="active"><i class="fa-solid fa-gauge-high"></i> Dashboard</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="dashboard-header">
+      <div class="dashboard-title">
+        <h1>Rail Operations Analytics & Fleet Control</h1>
+        <p>Executive performance overview, dynamic revenue monitoring, and emergency dispatch logs.</p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button id="btn-open-add-train-modal" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i> Add New Train
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Metric Cards Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Total Revenue</h3>
+          <div class="kpi-value" id="kpi-revenue-val">₹0.00</div>
+          <span class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +14.2% vs last week</span>
+        </div>
+        <div class="kpi-icon-box icon-green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Total Bookings</h3>
+          <div class="kpi-value" id="kpi-bookings-val">0</div>
+          <span class="kpi-trend trend-up"><i class="fa-solid fa-check"></i> Systemwide tickets</span>
+        </div>
+        <div class="kpi-icon-box icon-blue"><i class="fa-solid fa-ticket"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Average Occupancy</h3>
+          <div class="kpi-value" id="kpi-occupancy-val">0%</div>
+          <span class="kpi-trend trend-up"><i class="fa-solid fa-users"></i> Across active fleet</span>
+        </div>
+        <div class="kpi-icon-box icon-orange"><i class="fa-solid fa-chart-pie"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Active Trains</h3>
+          <div class="kpi-value" id="kpi-trains-val">0</div>
+          <span class="kpi-trend" style="color: var(--text-muted);">Express & Vande Bharat</span>
+        </div>
+        <div class="kpi-icon-box icon-blue"><i class="fa-solid fa-train"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Registered Users</h3>
+          <div class="kpi-value" id="kpi-users-val">0</div>
+          <span class="kpi-trend trend-up"><i class="fa-solid fa-user-plus"></i> Passenger profiles</span>
+        </div>
+        <div class="kpi-icon-box icon-blue"><i class="fa-solid fa-users"></i></div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-content">
+          <h3>Emergency Incidents</h3>
+          <div class="kpi-value" id="kpi-emergency-val" style="color: var(--accent-red);">0</div>
+          <span class="kpi-trend trend-down"><i class="fa-solid fa-shield-halved"></i> RPF SOS dispatched</span>
+        </div>
+        <div class="kpi-icon-box icon-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      </div>
+    </div>
+
+    <!-- Chart.js Charts Grid -->
+    <div class="charts-grid">
+      <!-- Chart 1: Daily Bookings & Revenue -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Daily Booking Volumes & Revenue Trends</h3>
+          <span class="badge badge-available">7-Day Trajectory</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-daily-bookings"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Quota Distribution -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Quota Utilization Breakdown</h3>
+          <span class="badge" style="background: rgba(19, 64, 116, 0.08); color: var(--primary-navy);">All Routes</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-quota-usage"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <!-- Chart 3: Class Occupancy -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Class-Wise Average Occupancy Rate (%)</h3>
+          <span class="badge" style="background: rgba(42, 157, 143, 0.1); color: #1b685f;">Demand Analysis</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-class-occupancy"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 4: Delay Distribution -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Punctuality & Delay Distribution</h3>
+          <span class="badge badge-wl">Operational SLA</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-delay-distribution"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Administrative Data Tables -->
+    <div class="table-card">
+      <div class="admin-tabs" style="padding: 1rem 1.5rem 0;">
+        <button class="admin-tab active" data-target="pane-bookings"><i class="fa-solid fa-ticket"></i> Recent Bookings</button>
+        <button class="admin-tab" data-target="pane-trains"><i class="fa-solid fa-train"></i> Train Fleet</button>
+        <button class="admin-tab" data-target="pane-users"><i class="fa-solid fa-users"></i> Registered Users</button>
+        <button class="admin-tab" data-target="pane-emergencies"><i class="fa-solid fa-triangle-exclamation"></i> Emergency SOS Logs</button>
+        <button class="admin-tab" data-target="pane-cleaning"><i class="fa-solid fa-broom"></i> Cleaning Requests</button>
+        <button class="admin-tab" data-target="pane-food-orders"><i class="fa-solid fa-utensils"></i> Food Orders</button>
+        <button class="admin-tab" data-target="pane-tte"><i class="fa-solid fa-ticket"></i> TTE Requests</button>
+        <button class="admin-tab" data-target="pane-luggage"><i class="fa-solid fa-suitcase-rolling"></i> Left Luggage</button>
+      </div>
+
+      <!-- Tab 1: Bookings -->
+      <div class="admin-tab-pane" id="pane-bookings">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>PNR</th>
+                <th>Passenger</th>
+                <th>Train</th>
+                <th>Journey Date</th>
+                <th>Coach / Class</th>
+                <th>Total Fare</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-bookings-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Trains -->
+      <div class="admin-tab-pane" id="pane-trains" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Train #</th>
+                <th>Train Name</th>
+                <th>Route</th>
+                <th>Timings</th>
+                <th>Duration</th>
+                <th>Running Days</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-trains-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Users -->
+      <div class="admin-tab-pane" id="pane-users" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>Registered Date</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Emergencies -->
+      <div class="admin-tab-pane" id="pane-emergencies" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Incident ID</th>
+                <th>Emergency Type</th>
+                <th>Location</th>
+                <th>Passenger Contact</th>
+                <th>Status</th>
+                <th>Dispatch Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-emergencies-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 5: Cleaning Requests -->
+      <div class="admin-tab-pane" id="pane-cleaning" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Train & Coach</th>
+                <th>Seat</th>
+                <th>Issue Reported</th>
+                <th>Passenger Contact</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-cleaning-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 6: Food Orders -->
+      <div class="admin-tab-pane" id="pane-food-orders" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Passenger</th>
+                <th>Train & Berth</th>
+                <th>Delivery Halt</th>
+                <th>Restaurant</th>
+                <th>Total Fare</th>
+                <th>Order Status</th>
+                <th>Update Delivery Stage</th>
+              </tr>
+            </thead>
+            <tbody id="admin-food-orders-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 7: TTE Assistance Requests -->
+      <div class="admin-tab-pane" id="pane-tte" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Train & Date</th>
+                <th>Coach / Berth</th>
+                <th>PNR</th>
+                <th>Assistance Type</th>
+                <th>Description</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-tte-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 8: Left Luggage Requests -->
+      <div class="admin-tab-pane" id="pane-luggage" style="display: none;">
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Train & Date</th>
+                <th>Coach / Seat</th>
+                <th>Deboarding Stn</th>
+                <th>Luggage Item</th>
+                <th>Passenger Mobile</th>
+                <th>Submitted At</th>
+                <th>Status</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-luggage-tbody">
+              <!-- Injected by charts.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Train Modal -->
+  <div class="modal-overlay" id="add-train-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.2rem; color: var(--primary-navy);"><i class="fa-solid fa-train"></i> Add New Train to Fleet</h3>
+        <button onclick="closeTrainModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form id="add-train-form">
+        <div class="modal-body">
+          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label>Train Number *</label>
+              <input type="text" id="new-train-number" class="form-control" placeholder="e.g. 12953" required>
+            </div>
+            <div class="form-group">
+              <label>Train Name *</label>
+              <input type="text" id="new-train-name" class="form-control" placeholder="e.g. August Kranti Rajdhani" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label>Source Station</label>
+              <select id="new-train-src" class="form-control">
+                <option value="1">New Delhi (NDLS)</option>
+                <option value="2">Mumbai Central (MMCT)</option>
+                <option value="3">Howrah Junction (HWH)</option>
+                <option value="4">KSR Bengaluru (SBC)</option>
+                <option value="6">Ahmedabad Junction (ADI)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Destination Station</label>
+              <select id="new-train-dst" class="form-control">
+                <option value="2">Mumbai Central (MMCT)</option>
+                <option value="1">New Delhi (NDLS)</option>
+                <option value="3">Howrah Junction (HWH)</option>
+                <option value="4">KSR Bengaluru (SBC)</option>
+                <option value="6">Ahmedabad Junction (ADI)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div class="form-group">
+              <label>Departure Time</label>
+              <input type="text" id="new-train-dep" class="form-control" value="17:05" required>
+            </div>
+            <div class="form-group">
+              <label>Arrival Time</label>
+              <input type="text" id="new-train-arr" class="form-control" value="10:05" required>
+            </div>
+            <div class="form-group">
+              <label>Duration</label>
+              <input type="text" id="new-train-duration" class="form-control" value="17h 00m" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Running Days</label>
+              <input type="text" id="new-train-days" class="form-control" value="Mon,Tue,Wed,Thu,Fri,Sat,Sun" required>
+            </div>
+            <div class="form-group">
+              <label>Train Type</label>
+              <select id="new-train-type" class="form-control">
+                <option value="Superfast Express">Superfast Express</option>
+                <option value="Rajdhani Express">Rajdhani Express</option>
+                <option value="Vande Bharat Express">Vande Bharat Express</option>
+                <option value="Shatabdi Express">Shatabdi Express</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="closeTrainModal()" class="btn btn-outline">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Save Train</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>

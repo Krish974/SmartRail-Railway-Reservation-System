@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Order Live Tracking - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .tracking-hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 60%, var(--primary-blue) 100%);
+      color: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .tracking-hero h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .tracking-search-bar {
+      max-width: 600px;
+      margin: -1.75rem auto 2.5rem;
+      background: white;
+      padding: 0.75rem;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      gap: 0.5rem;
+      border: 1px solid var(--border-light);
+      position: relative;
+      z-index: 10;
+    }
+    .tracking-search-bar input {
+      border: none;
+      padding: 0.6rem 1.25rem;
+      flex: 1;
+      font-size: 1rem;
+      outline: none;
+    }
+    .tracking-search-bar button {
+      border-radius: var(--radius-full);
+      padding: 0.6rem 1.5rem;
+    }
+
+    .tracking-container {
+      max-width: 900px;
+      margin: 0 auto 4rem;
+    }
+
+    .status-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* 7-Stage Railway Timeline */
+    .timeline {
+      position: relative;
+      margin: 2.5rem 0 2rem 1.5rem;
+      padding-left: 2rem;
+      border-left: 3px solid var(--border-light);
+    }
+    .timeline-step {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-icon {
+      position: absolute;
+      left: -2.85rem;
+      top: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      transition: all 0.3s ease;
+    }
+    .timeline-step.completed .timeline-icon {
+      background: #2e7d32;
+      border-color: #2e7d32;
+      color: white;
+    }
+    .timeline-step.active .timeline-icon {
+      background: var(--accent-saffron);
+      border-color: var(--accent-saffron);
+      color: white;
+      box-shadow: 0 0 0 6px rgba(247, 127, 0, 0.25);
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0.5); }
+      70% { box-shadow: 0 0 0 10px rgba(247, 127, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0); }
+    }
+    .timeline-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+    .timeline-step.active .timeline-title {
+      color: var(--accent-saffron);
+    }
+    .timeline-step.pending .timeline-title {
+      color: var(--text-muted);
+    }
+    .timeline-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .timeline-time {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      background: #f8fafc;
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+      margin-top: 1.5rem;
+    }
+    .detail-item-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .detail-item-val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+    }
+
+    .order-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+    .order-items-table th, .order-items-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .order-items-table th {
+      background: #f8fafc;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-item">
+        <i class="fa-solid fa-phone-volume"></i> 24&times;7 Railway Helpline: <strong>139</strong>
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item">
+        <i class="fa-solid fa-utensils"></i> Verified IRCTC e-Catering Partner Platform
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item top-bar-security">
+        <i class="fa-solid fa-shield-halved"></i> 100% Hygienic Meal Guarantee
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container nav-three-section">
+      <div class="nav-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="fa-solid fa-train-subway"></i>
+          <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+          <span class="brand-tag">Food</span>
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html" class="active"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="nav-auth" id="nav-auth-container"></div>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="tracking-hero">
+    <h1>Live Food Order Tracking</h1>
+    <p>Real-time railway platform delivery timeline for your fresh train meal</p>
+  </header>
+
+  <!-- Search Bar for Order ID -->
+  <form class="tracking-search-bar" onsubmit="handleTrackSearch(event)">
+    <input type="text" id="order-id-input" placeholder="Enter Food Order ID (e.g. FOOD-20261001-XXXXX)" required>
+    <button type="submit" class="btn btn-accent" id="btn-track">
+      <i class="fa-solid fa-magnifying-glass"></i> Track Order
+    </button>
+  </form>
+
+  <!-- Main Tracking Container -->
+  <main class="container tracking-container">
+    <div id="tracking-loading" style="display: none; text-align: center; padding: 3rem;">
+      <i class="fa-solid fa-spinner fa-spin" style="font-size: 2.5rem; color: var(--accent-saffron); margin-bottom: 1rem;"></i>
+      <h3 style="color: var(--primary-navy);">Fetching Live Order Status...</h3>
+    </div>
+
+    <div id="tracking-content" style="display: none;">
+      <!-- Order Header Card -->
+      <div class="status-card">
+        <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1.25rem;">
+          <div>
+            <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">
+              IRCTC Food Order
+            </div>
+            <h2 style="font-size: 1.6rem; color: var(--primary-navy); margin: 0.2rem 0;" id="ord-number">
+              FOOD-YYYYMMDD-XXXXX
+            </h2>
+            <div style="font-size: 0.85rem; color: var(--text-muted);" id="ord-created-at">
+              Placed on Oct 01, 2026
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div id="ord-status-badge" style="display: inline-block; padding: 0.45rem 1.1rem; border-radius: var(--radius-full); font-weight: 700; font-size: 0.95rem; background: #e8f5e9; color: #2e7d32;">
+              ORDER_PLACED
+            </div>
+            <button class="btn btn-sm btn-outline" style="margin-top: 0.5rem; display: block;" onclick="refreshCurrentOrder()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh Status
+            </button>
+          </div>
+        </div>
+
+        <!-- 7-Stage Railway Timeline -->
+        <h3 style="margin-top: 1.75rem; font-size: 1.2rem; color: var(--primary-navy);">
+          <i class="fa-solid fa-route" style="color: var(--accent-saffron);"></i> Order Delivery Progress
+        </h3>
+        
+        <div class="timeline" id="order-timeline">
+          <!-- Populated by food_tracking.js -->
+        </div>
+
+        <!-- Delivery & Passenger Info Grid -->
+        <div class="detail-grid">
+          <div>
+            <div class="detail-item-label">Passenger</div>
+            <div class="detail-item-val" id="ord-passenger">Ramesh Kumar</div>
+            <small style="color: var(--text-muted);" id="ord-phone">+91 9876543210</small>
+          </div>
+          <div>
+            <div class="detail-item-label">Train & Coach</div>
+            <div class="detail-item-val" id="ord-train">12952 (Rajdhani)</div>
+            <small style="color: var(--text-muted);" id="ord-berth">Coach B1, Berth 34</small>
+          </div>
+          <div>
+            <div class="detail-item-label">Delivery Halt</div>
+            <div class="detail-item-val" id="ord-station">NDLS - New Delhi</div>
+            <small style="color: var(--text-muted);" id="ord-pnr">PNR: Attached</small>
+          </div>
+          <div>
+            <div class="detail-item-label">Restaurant</div>
+            <div class="detail-item-val" id="ord-restaurant">Haldiram's Express</div>
+            <small style="color: #2e7d32;" id="ord-fssai">FSSAI Certified</small>
+          </div>
+        </div>
+
+        <!-- Ordered Items -->
+        <h3 style="margin-top: 2rem; font-size: 1.15rem; color: var(--primary-navy);">
+          <i class="fa-solid fa-bowl-rice" style="color: var(--primary-blue);"></i> Ordered Items
+        </h3>
+        <table class="order-items-table">
+          <thead>
+            <tr>
+              <th>Dish Name</th>
+              <th style="text-align: center;">Qty</th>
+              <th style="text-align: right;">Price</th>
+              <th style="text-align: right;">Total</th>
+            </tr>
+          </thead>
+          <tbody id="ord-items-tbody">
+            <!-- Populated dynamically -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-secondary);">Subtotal</td>
+              <td style="text-align: right; font-weight: 600;" id="ord-subtotal">₹0.00</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: 600; color: var(--text-secondary);">Station Berth Delivery</td>
+              <td style="text-align: right; font-weight: 600;" id="ord-delivery">₹20.00</td>
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: 700; font-size: 1.1rem; color: var(--primary-navy);">Grand Total Paid</td>
+              <td style="text-align: right; font-weight: 800; font-size: 1.15rem; color: var(--accent-saffron);" id="ord-total">₹0.00</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <!-- Actions -->
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="food-order.html" class="btn btn-outline">
+            <i class="fa-solid fa-plus"></i> Order More Food
+          </a>
+          <a href="chatbot.html" class="btn btn-primary">
+            <i class="fa-solid fa-robot"></i> Ask AI Assistant About This Order
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="tracking-empty" style="display: none; background: white; border-radius: var(--radius-lg); padding: 3rem; text-align: center; border: 1px solid var(--border-light);">
+      <i class="fa-solid fa-magnifying-glass" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+      <h3 style="color: var(--primary-navy); margin-bottom: 0.5rem;">Order Not Found</h3>
+      <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 1.5rem;">
+        Please check your Food Order ID format (e.g. FOOD-20261001-XXXXX). You can find this in your confirmation screen or order history.
+      </p>
+      <a href="food-order.html" class="btn btn-accent">
+        <i class="fa-solid fa-utensils"></i> Browse Restaurants & Order
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <div class="footer-logo">SmartRail</div>
+        <p class="footer-desc">National Railway Ticket & e-Catering Food Ordering System. Fresh hot meals delivered to your train berth at major railway junctions.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Food Services</h4>
+        <ul class="footer-links">
+          <li><a href="food-order.html">Order Food on Train</a></li>
+          <li><a href="food-order-tracking.html">Track Active Food Order</a></li>
+          <li><a href="pnr-status.html">PNR Meal Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Passenger Safety</h4>
+        <ul class="footer-links">
+          <li><a href="emergency.html">Emergency SOS (139)</a></li>
+          <li><a href="live-tracking.html">Live GPS Movement</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/food_tracking.js"></script>
+</body>
+</html>

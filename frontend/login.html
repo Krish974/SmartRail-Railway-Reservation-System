@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .auth-wrapper {
+      max-width: 460px;
+      margin: 3rem auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="auth-wrapper">
+      <div class="card" style="padding: 2.25rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(19, 64, 116, 0.1); color: var(--primary-navy); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin: 0 auto 1rem;">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h2 style="font-size: 1.6rem; color: var(--primary-navy); margin-bottom: 0.25rem;">Account Sign In</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Access your railway reservations, tickets, and travel history.</p>
+        </div>
+
+        <!-- Quick One-Click Demo Credentials -->
+        <div style="background: var(--bg-slate); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 0.5rem;">
+            🚀 Quick Demo Login Credentials
+          </span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn btn-sm btn-outline" style="flex: 1; background: white;" onclick="fillDemoCredentials('admin@railway.gov.in', 'Admin@12345')">
+              <i class="fa-solid fa-user-shield"></i> Admin Demo
+            </button>
+            <button type="button" class="btn btn-sm btn-outline" style="flex: 1; background: white;" onclick="fillDemoCredentials('rahul.sharma@example.com', 'User@12345')">
+              <i class="fa-solid fa-user"></i> Passenger Demo
+            </button>
+          </div>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label>Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="Enter password" required>
+          </div>
+
+          <button type="submit" id="btn-submit-login" class="btn btn-primary btn-lg" style="width: 100%;">
+            Sign In to SmartRail
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          Don't have an account yet? <a href="register.html" style="font-weight: 600;">Create an Account</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function fillDemoCredentials(email, password) {
+      document.getElementById('login-email').value = email;
+      document.getElementById('login-password').value = password;
+      showToast(`Filled credentials for ${email}`, 'info', 'Quick Fill');
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      const btn = document.getElementById('btn-submit-login');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...`;
+
+      const res = await fetchApi('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!res.success) {
+        btn.disabled = false;
+        btn.textContent = 'Sign In to SmartRail';
+        showToast(res.message, 'error', 'Login Failed');
+        return;
+      }
+
+      setCurrentUser(res.data);
+      showToast(res.message, 'success', 'Login Successful');
+
+      setTimeout(() => {
+        if (res.data.role === 'ADMIN') {
+          window.location.href = 'admin-dashboard.html';
+        } else {
+          window.location.href = 'index.html';
+        }
+      }, 700);
+    });
+  </script>
+</body>
+</html>

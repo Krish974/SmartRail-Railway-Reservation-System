@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PNR Status & AI Predictor - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html" class="active"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="pnr-hero-section" style="text-align: center; max-width: 680px; margin: 1rem auto 2.5rem;">
+      <div class="badge" style="background: rgba(19, 64, 116, 0.1); color: var(--primary-navy); margin-bottom: 0.75rem;">
+        <i class="fa-solid fa-ticket"></i> REAL-TIME PNR ENQUIRY
+      </div>
+      <h1 style="font-size: 2.2rem; color: var(--primary-navy); margin-bottom: 0.5rem;">Check PNR Status & Clearance Probability</h1>
+      <p style="color: var(--text-secondary);">Enter your 10-digit Passenger Name Record (PNR) number to inspect live berth allocation and AI confirmation probability.</p>
+
+      <!-- PNR Search Bar -->
+      <form id="pnr-search-form" style="display: flex; gap: 0.75rem; margin-top: 1.5rem; justify-content: center;">
+        <input type="text" id="input-pnr-search" class="form-control" placeholder="Enter 10-digit PNR (e.g. 2846190532)" style="max-width: 380px; font-size: 1.05rem; letter-spacing: 1px; font-weight: 600;" maxlength="10" required>
+        <button type="submit" class="btn btn-primary btn-lg">
+          <i class="fa-solid fa-magnifying-glass"></i> Check Status
+        </button>
+      </form>
+
+      <!-- Demo PNR Quick Chips -->
+      <div class="demo-chips" style="margin-top: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8rem; color: var(--text-muted);">
+        <span>Quick Test PNRs:</span>
+        <button type="button" class="btn btn-sm btn-outline" onclick="fetchPnrStatus('2846190532')">2846190532 (Confirmed)</button>
+        <button type="button" class="btn btn-sm btn-outline" onclick="fetchPnrStatus('4198273641')">4198273641 (RAC)</button>
+        <button type="button" class="btn btn-sm btn-outline" onclick="fetchPnrStatus('6720491823')">6720491823 (Waitlist & AI)</button>
+      </div>
+    </div>
+
+    <!-- PNR Result Display Target -->
+    <div id="pnr-result-card" style="max-width: 900px; margin: 0 auto; display: none;">
+      <!-- Populated by pnr.js -->
+    </div>
+  </main>
+
+  <!-- Interactive IRCTC Ticket Cancellation Modal -->
+  <div class="modal-overlay" id="cancel-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="color: var(--accent-red); font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+          <i class="fa-solid fa-triangle-exclamation"></i> Cancel Ticket &amp; Claim Refund
+        </h3>
+        <button onclick="closeCancelModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px dashed var(--border-light); font-size: 0.9rem;">
+          <div>PNR: <strong id="cancel-pnr-display" style="font-size: 1.1rem; color: var(--primary-navy); margin-left: 4px;">--</strong></div>
+          <div id="cancel-train-display" style="color: var(--text-muted); font-size: 0.85rem;">Train --</div>
+        </div>
+
+        <!-- Passenger Selection for Partial Cancellation -->
+        <div style="margin-bottom: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <label style="font-weight: 700; font-size: 0.88rem; color: var(--primary-navy);">
+              Select Passengers to Cancel:
+            </label>
+            <label style="font-size: 0.8rem; color: var(--primary-navy); cursor: pointer; display: flex; align-items: center; gap: 0.35rem; font-weight: 600;">
+              <input type="checkbox" id="cancel-select-all" onchange="toggleSelectAllPassengers(this.checked)" checked> Select All
+            </label>
+          </div>
+          <div id="cancel-passenger-list" style="max-height: 180px; overflow-y: auto; padding-right: 2px;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Real-Time Official Refund Breakdown -->
+        <div class="refund-rule-alert" id="cancel-rule-alert">
+          <i class="fa-solid fa-scale-balanced" style="margin-right: 4px;"></i>
+          <span id="cancel-rule-text">Calculating applicable official IRCTC cancellation rules...</span>
+        </div>
+
+        <div class="refund-summary-card">
+          <div class="row-item">
+            <span style="color: var(--text-secondary);">Ticket Fare (Selected):</span>
+            <strong id="cancel-selected-fare">₹0.00</strong>
+          </div>
+          <div class="row-item" style="color: var(--accent-red);">
+            <span>IRCTC Cancellation Charge:</span>
+            <strong id="cancel-charge">- ₹0.00</strong>
+          </div>
+          <div class="row-item" style="color: var(--text-muted); font-size: 0.82rem;">
+            <span>IRCTC Convenience Fee (Non-refundable):</span>
+            <span id="cancel-conv-fee">- ₹17.70</span>
+          </div>
+          <div class="row-item" style="border-top: 1px dashed var(--border-dark); padding-top: 0.65rem; margin-top: 0.45rem; font-size: 1.15rem; font-weight: 800; color: #10705a;">
+            <span>Estimated Refund Amount:</span>
+            <span id="cancel-refund-est">₹0.00</span>
+          </div>
+        </div>
+
+        <div class="cancel-warning-note">
+          <strong><i class="fa-solid fa-triangle-exclamation"></i> Warning:</strong> Cancellation is permanent and irreversible. Released berths will be immediately surrendered to waitlisted passengers. Refunds are processed to the source payment method within 3–5 business days.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick="closeCancelModal()" class="btn btn-outline">Keep Ticket</button>
+        <button id="btn-confirm-cancellation" class="btn btn-danger">
+          <i class="fa-solid fa-ban"></i> Confirm Cancellation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/qrcode.js"></script>
+  <script src="js/pnr.js"></script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+/* SMART RAILWAY COACH SEAT MAP STYLES */
+
+.coach-selection-header {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.train-meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.train-meta-pill .train-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+}
+
+.coach-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.coach-tab-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border-light);
+  background: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.coach-tab-btn:hover {
+  border-color: var(--primary-blue);
+  color: var(--primary-blue);
+}
+
+.coach-tab-btn.active {
+  background: var(--primary-navy);
+  color: white;
+  border-color: var(--primary-navy);
+}
+
+/* Lock Timer Banner */
+.lock-timer-banner {
+  background: linear-gradient(90deg, #fff3cd 0%, #ffecb5 100%);
+  border: 1px solid #ffeeba;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #856404;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.timer-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  background: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #ffeeba;
+  color: var(--accent-red);
+}
+
+/* AI Recommendation Panel */
+.ai-recommender-panel {
+  background: linear-gradient(135deg, rgba(121, 40, 202, 0.05) 0%, rgba(255, 0, 128, 0.05) 100%);
+  border: 1.5px dashed rgba(121, 40, 202, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ai-rec-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ai-rec-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7928ca, #ff0080);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(121, 40, 202, 0.25);
+}
+
+.ai-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Coach Hull Container */
+.coach-hull {
+  background: #ffffff;
+  border: 3px solid #0b2545;
+  border-radius: var(--radius-xl);
+  padding: 2rem 1.5rem;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  max-width: 1080px;
+  margin: 0 auto 3rem;
+  overflow-x: auto;
+}
+
+.coach-hull-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px dashed var(--border-dark);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Compartment Bays Grid */
+.coach-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 720px;
+}
+
+.compartment-bay {
+  background: var(--bg-slate);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 60px 140px;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+}
+
+.compartment-label {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  background: var(--primary-navy);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: var(--radius-full);
+}
+
+.main-bay {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.aisle-gap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.side-bay {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+/* Chair Car 3+2 Layout */
+.cc-grid {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 1.5rem;
+}
+
+/* Individual Seat Styling */
+.seat {
+  position: relative;
+  background: white;
+  border: 1.5px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  user-select: none;
+}
+
+.seat:hover:not(.seat-occupied):not(.seat-locked) {
+  border-color: var(--primary-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(19, 64, 116, 0.15);
+}
+
+.seat-number {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+}
+
+.seat-berth {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Seat States */
+.seat.seat-available {
+  background: white;
+  border-color: #cbd5e1;
+}
+
+.seat.seat-selected {
+  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+  border-color: var(--primary-navy);
+  color: white;
+  box-shadow: 0 4px 12px rgba(11, 37, 69, 0.35);
+  animation: pulseSelect 0.25s ease;
+}
+
+.seat.seat-selected .seat-number,
+.seat.seat-selected .seat-berth {
+  color: white;
+}
+
+@keyframes pulseSelect {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.seat.seat-occupied {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.seat.seat-occupied .seat-number,
+.seat.seat-occupied .seat-berth {
+  color: #94a3b8;
+}
+
+.seat.seat-locked {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #c2410c;
+  cursor: not-allowed;
+}
+
+.seat.seat-recommended {
+  border: 2px solid #7928ca;
+  background: linear-gradient(135deg, rgba(121, 40, 202, 0.08) 0%, rgba(255, 0, 128, 0.08) 100%);
+  box-shadow: 0 0 12px rgba(121, 40, 202, 0.25);
+}
+
+.seat-sparkle {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 0.75rem;
+  color: #ff0080;
+}
+
+/* Legend */
+.seat-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  margin-bottom: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.legend-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-dark);
+}
+
+.swatch-available { background: white; }
+.swatch-selected { background: var(--primary-navy); border-color: var(--primary-navy); }
+.swatch-occupied { background: #e2e8f0; }
+.swatch-locked { background: #fff7ed; border-color: #fed7aa; }
+.swatch-recommended { background: linear-gradient(135deg, rgba(121, 40, 202, 0.2), rgba(255, 0, 128, 0.2)); border: 1.5px solid #7928ca; }
+
+/* Sticky Booking Action Footer */
+.seat-action-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1rem 1.5rem;
+  z-index: 100;
+}
+
+.seat-action-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.selected-summary {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.summary-pill {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-pill span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.summary-pill strong {
+  font-size: 1.25rem;
+  color: var(--primary-navy);
+}

@@ -1,0 +1,1001 @@
+record_id,train_number,station_code,day_of_week,weather_condition,delay_minutes,punctual
+1,12301,NDLS,Sunday,Light Rain,7,1
+2,12952,MAO,Sunday,Clear,5,1
+3,12301,MAS,Friday,Fog/Mist,86,0
+4,12301,CNB,Monday,Thunderstorm,41,0
+5,12002,CNB,Monday,Clear,4,1
+6,12002,BPL,Monday,Clear,4,1
+7,20901,SBC,Friday,Clear,8,1
+8,12951,NGP,Tuesday,Clear,16,0
+9,12301,MMCT,Monday,Light Rain,36,0
+10,12302,NDLS,Thursday,Clear,5,1
+11,20901,ADI,Sunday,Clear,11,1
+12,22692,ADI,Saturday,Clear,9,1
+13,12951,BPL,Sunday,Clear,53,0
+14,12301,JP,Tuesday,Clear,2,1
+15,12302,JP,Monday,Light Rain,0,1
+16,12908,HWH,Sunday,Light Rain,11,1
+17,22692,CNB,Saturday,Overcast,8,1
+18,12951,CNB,Sunday,Clear,10,1
+19,12951,NGP,Saturday,Fog/Mist,36,0
+20,12302,ADI,Wednesday,Fog/Mist,44,0
+21,12302,NDLS,Friday,Overcast,2,1
+22,12908,MMCT,Monday,Clear,14,1
+23,12908,MMCT,Thursday,Light Rain,1,1
+24,20901,LKO,Monday,Clear,41,0
+25,12952,CNB,Sunday,Clear,0,1
+26,22692,BPL,Sunday,Clear,7,1
+27,12002,MMCT,Saturday,Clear,22,0
+28,12002,SBC,Tuesday,Thunderstorm,23,0
+29,12908,BPL,Sunday,Thunderstorm,38,0
+30,12951,BPL,Friday,Clear,6,1
+31,12952,MAS,Monday,Clear,6,1
+32,12002,BPL,Monday,Clear,8,1
+33,22692,SBC,Sunday,Clear,6,1
+34,12002,NGP,Monday,Clear,2,1
+35,22692,NDLS,Saturday,Clear,2,1
+36,20901,HWH,Wednesday,Clear,1,1
+37,12951,BPL,Monday,Clear,1,1
+38,12952,JP,Saturday,Fog/Mist,47,0
+39,12952,SBC,Friday,Clear,8,1
+40,12002,MAO,Wednesday,Fog/Mist,31,0
+41,12908,LKO,Sunday,Light Rain,17,0
+42,22692,ADI,Thursday,Fog/Mist,76,0
+43,12951,NDLS,Tuesday,Clear,20,0
+44,12301,CNB,Saturday,Clear,7,1
+45,12301,MMCT,Friday,Clear,11,1
+46,12302,MMCT,Friday,Overcast,3,1
+47,20901,JP,Monday,Fog/Mist,45,0
+48,20901,SBC,Monday,Light Rain,12,1
+49,20901,SBC,Monday,Light Rain,2,1
+50,20901,MAS,Friday,Clear,11,1
+51,20901,LKO,Friday,Fog/Mist,92,0
+52,12301,BPL,Saturday,Overcast,12,1
+53,12951,MMCT,Thursday,Clear,9,1
+54,12002,MAO,Saturday,Overcast,6,1
+55,12951,MAS,Thursday,Clear,29,0
+56,12908,ADI,Tuesday,Light Rain,7,1
+57,12951,NDLS,Monday,Clear,11,1
+58,22692,MAO,Thursday,Fog/Mist,42,0
+59,20901,MAO,Saturday,Clear,7,1
+60,12302,LKO,Monday,Light Rain,21,0
+61,20901,JP,Sunday,Clear,34,0
+62,12952,HWH,Saturday,Clear,20,0
+63,12952,MMCT,Saturday,Clear,0,1
+64,22692,NDLS,Saturday,Clear,11,1
+65,12952,MAS,Friday,Light Rain,10,1
+66,12302,HWH,Friday,Light Rain,9,1
+67,20901,ADI,Wednesday,Clear,4,1
+68,12002,MMCT,Monday,Clear,1,1
+69,12952,CNB,Wednesday,Clear,24,0
+70,20901,SBC,Thursday,Clear,11,1
+71,12302,JP,Tuesday,Light Rain,55,0
+72,12908,HWH,Saturday,Overcast,1,1
+73,20901,MMCT,Tuesday,Light Rain,7,1
+74,12908,LKO,Wednesday,Clear,0,1
+75,20901,LKO,Monday,Light Rain,13,1
+76,12002,SBC,Saturday,Clear,20,0
+77,12908,HWH,Thursday,Light Rain,49,0
+78,12002,HWH,Thursday,Clear,1,1
+79,12951,MMCT,Saturday,Clear,3,1
+80,20901,MAS,Wednesday,Clear,7,1
+81,12951,NGP,Thursday,Light Rain,43,0
+82,12908,MMCT,Tuesday,Clear,1,1
+83,12952,HWH,Thursday,Overcast,5,1
+84,12302,JP,Thursday,Light Rain,1,1
+85,12908,JP,Saturday,Clear,22,0
+86,12952,SBC,Thursday,Clear,18,0
+87,12951,MMCT,Friday,Clear,16,0
+88,12951,NGP,Friday,Fog/Mist,44,0
+89,20901,BPL,Wednesday,Overcast,6,1
+90,20901,NDLS,Monday,Clear,4,1
+91,22692,JP,Saturday,Clear,0,1
+92,12951,LKO,Friday,Clear,16,0
+93,22692,CNB,Sunday,Overcast,7,1
+94,22692,NDLS,Sunday,Clear,2,1
+95,12301,CNB,Thursday,Light Rain,2,1
+96,12002,SBC,Friday,Clear,8,1
+97,12302,MAO,Tuesday,Fog/Mist,81,0
+98,12951,ADI,Wednesday,Clear,17,0
+99,12002,HWH,Tuesday,Clear,2,1
+100,12952,JP,Tuesday,Fog/Mist,49,0
+101,12951,ADI,Monday,Clear,7,1
+102,22692,CNB,Wednesday,Clear,0,1
+103,12951,MMCT,Friday,Clear,7,1
+104,12951,MAO,Wednesday,Clear,6,1
+105,12002,MMCT,Monday,Overcast,7,1
+106,22692,JP,Tuesday,Thunderstorm,31,0
+107,12908,BPL,Saturday,Clear,4,1
+108,12951,BPL,Thursday,Clear,14,1
+109,12301,HWH,Saturday,Overcast,0,1
+110,12301,MAO,Thursday,Fog/Mist,30,0
+111,22692,CNB,Sunday,Clear,1,1
+112,12952,HWH,Friday,Clear,18,0
+113,12952,BPL,Monday,Light Rain,11,1
+114,12002,MAS,Thursday,Fog/Mist,32,0
+115,20901,BPL,Thursday,Overcast,19,0
+116,12002,NDLS,Wednesday,Clear,3,1
+117,20901,JP,Friday,Clear,19,0
+118,12908,SBC,Wednesday,Clear,29,0
+119,12908,BPL,Wednesday,Clear,12,1
+120,12302,MAS,Sunday,Fog/Mist,49,0
+121,12301,NDLS,Monday,Light Rain,1,1
+122,12951,BPL,Sunday,Clear,9,1
+123,12002,NGP,Thursday,Clear,33,0
+124,12952,MAS,Monday,Clear,13,1
+125,12302,ADI,Sunday,Thunderstorm,27,0
+126,12952,BPL,Tuesday,Overcast,1,1
+127,12301,HWH,Sunday,Clear,13,1
+128,22692,CNB,Thursday,Clear,17,0
+129,12002,CNB,Sunday,Clear,23,0
+130,22692,LKO,Sunday,Overcast,46,0
+131,22692,SBC,Wednesday,Clear,4,1
+132,12301,NGP,Saturday,Clear,1,1
+133,12951,JP,Wednesday,Fog/Mist,41,0
+134,22692,NGP,Tuesday,Light Rain,17,0
+135,12908,MMCT,Friday,Clear,17,0
+136,12951,LKO,Thursday,Thunderstorm,29,0
+137,12301,NDLS,Friday,Clear,7,1
+138,20901,HWH,Saturday,Clear,21,0
+139,12302,NGP,Friday,Overcast,14,1
+140,12002,NGP,Saturday,Thunderstorm,71,0
+141,22692,MMCT,Tuesday,Clear,17,0
+142,12301,CNB,Tuesday,Clear,67,0
+143,12302,NDLS,Monday,Clear,26,0
+144,12301,SBC,Thursday,Fog/Mist,52,0
+145,12951,MAO,Wednesday,Clear,39,0
+146,12302,HWH,Saturday,Clear,5,1
+147,20901,MAS,Thursday,Light Rain,24,0
+148,22692,JP,Monday,Clear,2,1
+149,22692,HWH,Sunday,Thunderstorm,32,0
+150,22692,JP,Thursday,Clear,4,1
+151,12908,JP,Friday,Clear,3,1
+152,12302,LKO,Wednesday,Overcast,2,1
+153,12302,NDLS,Sunday,Light Rain,1,1
+154,12301,CNB,Tuesday,Clear,17,0
+155,12002,MAS,Thursday,Clear,24,0
+156,12952,CNB,Tuesday,Fog/Mist,61,0
+157,12002,JP,Thursday,Clear,40,0
+158,12908,BPL,Wednesday,Thunderstorm,27,0
+159,12302,ADI,Monday,Clear,8,1
+160,12951,LKO,Thursday,Overcast,7,1
+161,12301,ADI,Sunday,Clear,10,1
+162,20901,NDLS,Monday,Clear,22,0
+163,12302,ADI,Tuesday,Fog/Mist,66,0
+164,20901,NDLS,Thursday,Clear,20,0
+165,12301,MAO,Tuesday,Clear,13,1
+166,12952,CNB,Sunday,Clear,3,1
+167,12002,MAO,Wednesday,Clear,11,1
+168,12301,MAS,Saturday,Fog/Mist,54,0
+169,12908,BPL,Friday,Clear,0,1
+170,12002,LKO,Wednesday,Clear,0,1
+171,12302,JP,Wednesday,Clear,12,1
+172,22692,SBC,Thursday,Clear,43,0
+173,20901,CNB,Friday,Clear,10,1
+174,12002,CNB,Monday,Light Rain,6,1
+175,12952,SBC,Monday,Clear,17,0
+176,20901,HWH,Tuesday,Overcast,7,1
+177,12301,SBC,Tuesday,Overcast,8,1
+178,12908,LKO,Tuesday,Fog/Mist,38,0
+179,12302,MAS,Tuesday,Clear,17,0
+180,12301,MAS,Tuesday,Clear,5,1
+181,12002,MAS,Thursday,Overcast,6,1
+182,12302,MAS,Sunday,Overcast,3,1
+183,12951,HWH,Saturday,Clear,0,1
+184,12301,LKO,Monday,Clear,1,1
+185,12952,NGP,Saturday,Light Rain,16,0
+186,20901,NDLS,Thursday,Clear,10,1
+187,12951,NGP,Friday,Clear,2,1
+188,12952,NGP,Thursday,Clear,44,0
+189,12952,ADI,Wednesday,Fog/Mist,46,0
+190,12951,MAO,Wednesday,Overcast,1,1
+191,12002,ADI,Friday,Fog/Mist,59,0
+192,20901,ADI,Saturday,Clear,11,1
+193,12301,SBC,Sunday,Fog/Mist,74,0
+194,12301,MAO,Monday,Clear,4,1
+195,12952,MAS,Thursday,Clear,10,1
+196,20901,NDLS,Sunday,Overcast,4,1
+197,20901,MAS,Wednesday,Clear,27,0
+198,12002,BPL,Sunday,Overcast,11,1
+199,12952,MAO,Monday,Clear,5,1
+200,12002,BPL,Wednesday,Clear,11,1
+201,12908,NGP,Friday,Clear,25,0
+202,12302,BPL,Sunday,Clear,10,1
+203,22692,JP,Sunday,Clear,10,1
+204,12302,SBC,Friday,Thunderstorm,58,0
+205,12002,SBC,Saturday,Clear,15,0
+206,12952,BPL,Sunday,Clear,16,0
+207,12908,MMCT,Monday,Clear,3,1
+208,22692,MAO,Wednesday,Thunderstorm,31,0
+209,12908,JP,Thursday,Thunderstorm,30,0
+210,12302,JP,Wednesday,Overcast,13,1
+211,12952,SBC,Friday,Fog/Mist,44,0
+212,12002,SBC,Thursday,Clear,16,0
+213,12301,MMCT,Monday,Clear,8,1
+214,20901,MAO,Friday,Clear,10,1
+215,12951,MMCT,Saturday,Light Rain,1,1
+216,12908,NGP,Wednesday,Clear,1,1
+217,12951,HWH,Wednesday,Clear,41,0
+218,12951,NDLS,Thursday,Clear,33,0
+219,22692,NDLS,Tuesday,Clear,7,1
+220,12952,JP,Monday,Clear,7,1
+221,22692,JP,Sunday,Clear,9,1
+222,12002,CNB,Tuesday,Fog/Mist,60,0
+223,12908,LKO,Wednesday,Clear,2,1
+224,12908,MAO,Friday,Thunderstorm,44,0
+225,12908,NDLS,Monday,Clear,1,1
+226,12952,HWH,Saturday,Clear,8,1
+227,22692,MAO,Tuesday,Clear,6,1
+228,12951,SBC,Sunday,Clear,6,1
+229,12301,NGP,Thursday,Clear,11,1
+230,12951,ADI,Tuesday,Clear,3,1
+231,12908,LKO,Saturday,Light Rain,2,1
+232,12908,NDLS,Tuesday,Clear,9,1
+233,20901,MAS,Sunday,Clear,23,0
+234,12952,MAS,Saturday,Fog/Mist,77,0
+235,12002,HWH,Thursday,Fog/Mist,31,0
+236,12002,JP,Saturday,Clear,16,0
+237,20901,CNB,Monday,Clear,9,1
+238,12302,NGP,Wednesday,Thunderstorm,28,0
+239,12302,MAS,Wednesday,Clear,1,1
+240,12302,MAS,Tuesday,Fog/Mist,63,0
+241,12301,MMCT,Tuesday,Clear,12,1
+242,12951,HWH,Friday,Fog/Mist,67,0
+243,22692,NGP,Sunday,Overcast,17,0
+244,12301,BPL,Monday,Clear,18,0
+245,12002,SBC,Monday,Fog/Mist,49,0
+246,12002,CNB,Thursday,Overcast,5,1
+247,22692,NDLS,Friday,Clear,9,1
+248,12951,BPL,Wednesday,Light Rain,1,1
+249,12908,MAO,Saturday,Overcast,6,1
+250,12002,JP,Friday,Clear,1,1
+251,12302,JP,Saturday,Light Rain,4,1
+252,20901,ADI,Tuesday,Overcast,3,1
+253,12302,JP,Wednesday,Clear,1,1
+254,12951,SBC,Saturday,Clear,0,1
+255,12952,NDLS,Wednesday,Clear,4,1
+256,12908,NDLS,Thursday,Clear,34,0
+257,20901,MMCT,Sunday,Clear,38,0
+258,22692,CNB,Wednesday,Clear,4,1
+259,12951,LKO,Sunday,Clear,16,0
+260,12908,BPL,Monday,Overcast,7,1
+261,12951,BPL,Thursday,Clear,4,1
+262,12952,JP,Tuesday,Fog/Mist,60,0
+263,12002,CNB,Tuesday,Clear,57,0
+264,12908,MAO,Tuesday,Light Rain,20,0
+265,12951,SBC,Thursday,Clear,3,1
+266,12908,ADI,Wednesday,Fog/Mist,33,0
+267,12908,MMCT,Wednesday,Clear,3,1
+268,12908,MAO,Friday,Fog/Mist,33,0
+269,22692,BPL,Sunday,Light Rain,8,1
+270,12908,ADI,Wednesday,Clear,8,1
+271,12302,MAO,Thursday,Overcast,11,1
+272,12302,BPL,Friday,Clear,7,1
+273,12002,MAO,Saturday,Clear,10,1
+274,12002,BPL,Saturday,Clear,7,1
+275,12952,MMCT,Wednesday,Fog/Mist,60,0
+276,22692,ADI,Saturday,Fog/Mist,36,0
+277,12002,JP,Monday,Fog/Mist,53,0
+278,20901,BPL,Thursday,Overcast,2,1
+279,12908,LKO,Friday,Clear,5,1
+280,12302,MMCT,Friday,Clear,29,0
+281,20901,LKO,Thursday,Fog/Mist,48,0
+282,12301,JP,Sunday,Fog/Mist,51,0
+283,20901,ADI,Friday,Clear,6,1
+284,12002,LKO,Friday,Clear,21,0
+285,12302,LKO,Sunday,Overcast,70,0
+286,12951,CNB,Tuesday,Overcast,5,1
+287,12301,LKO,Tuesday,Clear,11,1
+288,12952,BPL,Thursday,Clear,14,1
+289,12908,NGP,Saturday,Clear,1,1
+290,12951,NGP,Saturday,Clear,17,0
+291,12908,HWH,Friday,Fog/Mist,64,0
+292,12951,LKO,Tuesday,Overcast,17,0
+293,12002,SBC,Saturday,Clear,5,1
+294,12952,SBC,Friday,Clear,39,0
+295,12951,BPL,Saturday,Clear,22,0
+296,12002,ADI,Wednesday,Clear,1,1
+297,12952,NDLS,Monday,Clear,43,0
+298,12302,LKO,Saturday,Clear,3,1
+299,12952,JP,Sunday,Clear,2,1
+300,12302,MMCT,Thursday,Fog/Mist,41,0
+301,12952,CNB,Tuesday,Fog/Mist,45,0
+302,12301,NDLS,Wednesday,Clear,1,1
+303,12002,LKO,Friday,Overcast,18,0
+304,12002,JP,Saturday,Clear,7,1
+305,20901,CNB,Tuesday,Fog/Mist,72,0
+306,12002,ADI,Friday,Overcast,27,0
+307,12002,NDLS,Monday,Overcast,4,1
+308,20901,MAO,Wednesday,Clear,4,1
+309,12302,NGP,Thursday,Clear,1,1
+310,12952,MAO,Sunday,Clear,34,0
+311,12002,ADI,Tuesday,Thunderstorm,23,0
+312,22692,LKO,Tuesday,Clear,9,1
+313,12908,ADI,Thursday,Fog/Mist,35,0
+314,12301,CNB,Thursday,Clear,25,0
+315,12301,SBC,Monday,Clear,7,1
+316,12302,HWH,Wednesday,Clear,1,1
+317,12301,HWH,Friday,Thunderstorm,17,0
+318,12908,BPL,Saturday,Clear,2,1
+319,12951,HWH,Saturday,Clear,4,1
+320,12951,JP,Tuesday,Clear,27,0
+321,12301,JP,Friday,Clear,0,1
+322,12908,JP,Monday,Clear,1,1
+323,12302,JP,Sunday,Clear,33,0
+324,12302,SBC,Tuesday,Overcast,11,1
+325,12302,HWH,Friday,Clear,0,1
+326,12908,MAS,Tuesday,Clear,8,1
+327,12301,SBC,Saturday,Clear,14,1
+328,12908,LKO,Sunday,Fog/Mist,65,0
+329,22692,SBC,Tuesday,Overcast,15,0
+330,12951,NDLS,Tuesday,Clear,12,1
+331,22692,SBC,Sunday,Clear,20,0
+332,12952,SBC,Thursday,Thunderstorm,19,0
+333,12002,JP,Sunday,Light Rain,27,0
+334,12951,MMCT,Thursday,Clear,4,1
+335,12301,LKO,Monday,Light Rain,3,1
+336,20901,BPL,Monday,Clear,17,0
+337,12002,SBC,Saturday,Light Rain,0,1
+338,12302,HWH,Sunday,Clear,7,1
+339,12301,NGP,Tuesday,Clear,9,1
+340,12302,LKO,Tuesday,Clear,11,1
+341,20901,ADI,Sunday,Clear,12,1
+342,20901,BPL,Tuesday,Light Rain,0,1
+343,12002,MAO,Sunday,Overcast,7,1
+344,12302,NDLS,Sunday,Clear,19,0
+345,12302,MMCT,Sunday,Overcast,16,0
+346,12952,JP,Monday,Clear,4,1
+347,22692,CNB,Monday,Light Rain,9,1
+348,22692,MAO,Wednesday,Clear,5,1
+349,12908,MAS,Saturday,Clear,2,1
+350,20901,HWH,Monday,Clear,16,0
+351,22692,MAS,Monday,Clear,7,1
+352,20901,SBC,Monday,Clear,1,1
+353,22692,JP,Tuesday,Light Rain,6,1
+354,12951,MAO,Thursday,Overcast,10,1
+355,12908,NDLS,Wednesday,Clear,0,1
+356,12301,MAS,Friday,Clear,0,1
+357,12302,MAO,Friday,Clear,25,0
+358,12302,MAS,Saturday,Clear,51,0
+359,12908,JP,Sunday,Overcast,7,1
+360,20901,NDLS,Tuesday,Clear,4,1
+361,12002,MAO,Saturday,Fog/Mist,60,0
+362,12302,ADI,Tuesday,Clear,10,1
+363,12908,HWH,Sunday,Fog/Mist,63,0
+364,12952,HWH,Tuesday,Clear,23,0
+365,22692,NDLS,Friday,Clear,17,0
+366,12301,CNB,Monday,Clear,39,0
+367,12952,CNB,Thursday,Overcast,5,1
+368,20901,LKO,Tuesday,Clear,55,0
+369,22692,ADI,Tuesday,Light Rain,8,1
+370,22692,NDLS,Thursday,Clear,10,1
+371,12301,NGP,Thursday,Thunderstorm,53,0
+372,12951,ADI,Saturday,Fog/Mist,69,0
+373,20901,SBC,Friday,Clear,5,1
+374,12301,SBC,Wednesday,Light Rain,59,0
+375,12002,SBC,Saturday,Overcast,22,0
+376,12951,ADI,Wednesday,Light Rain,5,1
+377,22692,NGP,Wednesday,Clear,35,0
+378,12302,JP,Saturday,Fog/Mist,63,0
+379,12952,CNB,Sunday,Fog/Mist,36,0
+380,12002,NDLS,Saturday,Clear,10,1
+381,12301,JP,Sunday,Clear,14,1
+382,12908,MMCT,Monday,Thunderstorm,28,0
+383,20901,BPL,Monday,Clear,12,1
+384,20901,NGP,Sunday,Clear,0,1
+385,20901,HWH,Tuesday,Fog/Mist,47,0
+386,12952,MAO,Friday,Fog/Mist,51,0
+387,12951,LKO,Monday,Clear,5,1
+388,12952,LKO,Tuesday,Clear,73,0
+389,12952,MAO,Wednesday,Clear,2,1
+390,12908,SBC,Sunday,Fog/Mist,52,0
+391,12302,ADI,Tuesday,Overcast,19,0
+392,12301,CNB,Monday,Overcast,2,1
+393,12951,NDLS,Tuesday,Clear,10,1
+394,20901,HWH,Sunday,Clear,0,1
+395,12002,NDLS,Wednesday,Overcast,0,1
+396,22692,NGP,Wednesday,Clear,2,1
+397,12908,MMCT,Monday,Fog/Mist,56,0
+398,12002,ADI,Friday,Clear,18,0
+399,12951,LKO,Saturday,Clear,32,0
+400,12002,LKO,Monday,Clear,0,1
+401,20901,JP,Monday,Light Rain,4,1
+402,12002,CNB,Friday,Clear,0,1
+403,22692,BPL,Saturday,Overcast,20,0
+404,12301,HWH,Sunday,Clear,1,1
+405,12952,CNB,Monday,Light Rain,65,0
+406,12302,MAO,Wednesday,Overcast,8,1
+407,12952,NGP,Thursday,Clear,4,1
+408,12302,CNB,Tuesday,Clear,11,1
+409,12908,MAS,Monday,Light Rain,22,0
+410,12301,CNB,Tuesday,Overcast,17,0
+411,12302,MMCT,Wednesday,Thunderstorm,25,0
+412,12908,NDLS,Friday,Clear,25,0
+413,12302,ADI,Monday,Fog/Mist,61,0
+414,12301,CNB,Thursday,Light Rain,2,1
+415,22692,ADI,Saturday,Clear,18,0
+416,12302,JP,Friday,Clear,44,0
+417,12951,ADI,Monday,Clear,5,1
+418,12908,SBC,Tuesday,Light Rain,19,0
+419,12951,JP,Monday,Clear,5,1
+420,12301,NGP,Wednesday,Clear,26,0
+421,12002,HWH,Tuesday,Clear,23,0
+422,12951,NDLS,Monday,Clear,8,1
+423,20901,SBC,Sunday,Clear,11,1
+424,12952,NGP,Monday,Overcast,27,0
+425,22692,ADI,Saturday,Clear,4,1
+426,12302,NDLS,Friday,Clear,4,1
+427,12951,MAS,Thursday,Clear,2,1
+428,12002,HWH,Sunday,Clear,2,1
+429,12002,LKO,Tuesday,Clear,10,1
+430,12002,BPL,Friday,Clear,5,1
+431,12002,BPL,Monday,Overcast,14,1
+432,12302,SBC,Saturday,Clear,12,1
+433,12002,LKO,Thursday,Light Rain,7,1
+434,12908,JP,Friday,Clear,1,1
+435,12002,HWH,Wednesday,Clear,0,1
+436,12908,HWH,Tuesday,Overcast,37,0
+437,12951,SBC,Sunday,Light Rain,7,1
+438,12302,ADI,Friday,Clear,18,0
+439,12302,MMCT,Monday,Light Rain,1,1
+440,22692,MAS,Sunday,Clear,1,1
+441,12951,MMCT,Thursday,Clear,7,1
+442,22692,HWH,Thursday,Fog/Mist,60,0
+443,22692,MAO,Wednesday,Clear,27,0
+444,12951,BPL,Monday,Overcast,1,1
+445,22692,SBC,Friday,Clear,3,1
+446,12951,BPL,Thursday,Overcast,9,1
+447,12952,LKO,Saturday,Overcast,22,0
+448,22692,LKO,Monday,Clear,54,0
+449,12951,CNB,Saturday,Clear,12,1
+450,20901,ADI,Friday,Clear,16,0
+451,12002,BPL,Wednesday,Clear,11,1
+452,20901,MMCT,Saturday,Fog/Mist,56,0
+453,12908,MMCT,Thursday,Light Rain,10,1
+454,12951,MAS,Friday,Thunderstorm,47,0
+455,12302,NGP,Sunday,Overcast,5,1
+456,12002,MAO,Sunday,Thunderstorm,31,0
+457,12002,LKO,Sunday,Light Rain,9,1
+458,12952,MAS,Thursday,Clear,3,1
+459,22692,MAS,Sunday,Thunderstorm,84,0
+460,20901,BPL,Tuesday,Fog/Mist,39,0
+461,12951,CNB,Thursday,Clear,43,0
+462,12952,MMCT,Monday,Clear,8,1
+463,20901,MAS,Tuesday,Clear,33,0
+464,12002,ADI,Thursday,Light Rain,4,1
+465,12951,MAS,Monday,Fog/Mist,39,0
+466,12301,JP,Saturday,Overcast,7,1
+467,12951,ADI,Wednesday,Clear,15,1
+468,12908,MAS,Thursday,Clear,10,1
+469,22692,HWH,Thursday,Clear,7,1
+470,12302,MMCT,Tuesday,Overcast,5,1
+471,12952,LKO,Friday,Clear,13,1
+472,22692,JP,Sunday,Fog/Mist,73,0
+473,12302,LKO,Wednesday,Clear,6,1
+474,12302,NDLS,Monday,Clear,3,1
+475,12952,MAS,Monday,Thunderstorm,49,0
+476,12951,MAS,Saturday,Fog/Mist,35,0
+477,12301,CNB,Thursday,Clear,5,1
+478,12908,ADI,Wednesday,Fog/Mist,30,0
+479,12002,CNB,Monday,Fog/Mist,62,0
+480,12951,CNB,Sunday,Fog/Mist,47,0
+481,22692,BPL,Tuesday,Clear,12,1
+482,12301,MAS,Friday,Overcast,19,0
+483,12301,CNB,Wednesday,Clear,9,1
+484,20901,ADI,Wednesday,Clear,30,0
+485,12301,NDLS,Tuesday,Clear,5,1
+486,12302,LKO,Saturday,Clear,5,1
+487,12951,HWH,Saturday,Fog/Mist,49,0
+488,22692,JP,Wednesday,Fog/Mist,52,0
+489,22692,NDLS,Monday,Clear,57,0
+490,12908,SBC,Tuesday,Clear,1,1
+491,12002,JP,Monday,Fog/Mist,31,0
+492,12301,MAO,Saturday,Clear,9,1
+493,12952,ADI,Saturday,Clear,7,1
+494,12908,BPL,Wednesday,Clear,1,1
+495,12002,NDLS,Thursday,Clear,11,1
+496,12302,CNB,Sunday,Overcast,32,0
+497,20901,MAO,Thursday,Fog/Mist,43,0
+498,12302,NGP,Sunday,Fog/Mist,46,0
+499,12301,JP,Thursday,Clear,12,1
+500,22692,MAS,Wednesday,Fog/Mist,41,0
+501,12952,ADI,Saturday,Clear,1,1
+502,12301,CNB,Monday,Clear,4,1
+503,22692,NDLS,Wednesday,Fog/Mist,30,0
+504,12952,SBC,Saturday,Clear,0,1
+505,20901,ADI,Tuesday,Clear,20,0
+506,12951,NGP,Tuesday,Clear,17,0
+507,12301,CNB,Monday,Overcast,0,1
+508,22692,JP,Tuesday,Clear,9,1
+509,22692,HWH,Saturday,Overcast,12,1
+510,12951,HWH,Tuesday,Clear,6,1
+511,20901,HWH,Thursday,Fog/Mist,89,0
+512,12952,NDLS,Sunday,Clear,7,1
+513,12952,ADI,Saturday,Clear,41,0
+514,12002,MAS,Thursday,Clear,3,1
+515,12952,MMCT,Friday,Clear,4,1
+516,12002,MMCT,Thursday,Light Rain,2,1
+517,12951,HWH,Saturday,Fog/Mist,61,0
+518,12908,JP,Sunday,Clear,47,0
+519,12301,CNB,Sunday,Fog/Mist,61,0
+520,20901,BPL,Saturday,Clear,8,1
+521,12302,HWH,Wednesday,Clear,28,0
+522,12301,NGP,Tuesday,Clear,2,1
+523,20901,HWH,Thursday,Light Rain,19,0
+524,22692,JP,Wednesday,Clear,7,1
+525,12302,MMCT,Wednesday,Clear,1,1
+526,12301,ADI,Thursday,Overcast,20,0
+527,20901,MAS,Monday,Clear,3,1
+528,22692,JP,Tuesday,Clear,32,0
+529,12301,MAS,Tuesday,Clear,6,1
+530,12908,JP,Wednesday,Clear,0,1
+531,22692,BPL,Friday,Thunderstorm,41,0
+532,12908,LKO,Friday,Light Rain,12,1
+533,12908,CNB,Wednesday,Light Rain,32,0
+534,12951,JP,Wednesday,Clear,14,1
+535,12301,NDLS,Thursday,Fog/Mist,77,0
+536,20901,JP,Tuesday,Light Rain,5,1
+537,12952,LKO,Friday,Clear,8,1
+538,12951,BPL,Saturday,Thunderstorm,27,0
+539,12301,JP,Monday,Clear,7,1
+540,22692,NGP,Sunday,Clear,8,1
+541,12908,BPL,Monday,Fog/Mist,69,0
+542,12951,ADI,Thursday,Clear,8,1
+543,12952,MAO,Wednesday,Clear,7,1
+544,20901,ADI,Saturday,Clear,13,1
+545,20901,BPL,Tuesday,Clear,31,0
+546,12952,BPL,Friday,Clear,16,0
+547,12951,CNB,Sunday,Clear,2,1
+548,20901,JP,Tuesday,Clear,1,1
+549,12951,HWH,Thursday,Clear,10,1
+550,12002,JP,Saturday,Fog/Mist,55,0
+551,20901,MAS,Friday,Overcast,42,0
+552,20901,HWH,Friday,Clear,11,1
+553,12952,MAO,Thursday,Light Rain,15,0
+554,22692,HWH,Wednesday,Clear,13,1
+555,12002,JP,Thursday,Clear,4,1
+556,12951,JP,Thursday,Clear,14,1
+557,12302,BPL,Sunday,Overcast,13,1
+558,12301,JP,Friday,Clear,12,1
+559,12302,NGP,Thursday,Overcast,12,1
+560,22692,ADI,Monday,Clear,4,1
+561,12002,CNB,Wednesday,Clear,6,1
+562,12952,NGP,Friday,Clear,32,0
+563,12002,NGP,Wednesday,Light Rain,6,1
+564,20901,CNB,Monday,Fog/Mist,65,0
+565,12302,MAO,Monday,Fog/Mist,33,0
+566,12301,SBC,Monday,Clear,15,0
+567,12952,MMCT,Sunday,Clear,23,0
+568,12002,MMCT,Thursday,Overcast,1,1
+569,12952,LKO,Tuesday,Clear,3,1
+570,12951,BPL,Sunday,Clear,19,0
+571,12951,NDLS,Saturday,Clear,9,1
+572,12302,MMCT,Wednesday,Clear,4,1
+573,12302,MAO,Friday,Thunderstorm,45,0
+574,12302,MAS,Saturday,Fog/Mist,44,0
+575,12002,BPL,Thursday,Fog/Mist,37,0
+576,22692,JP,Tuesday,Clear,8,1
+577,20901,HWH,Sunday,Clear,6,1
+578,20901,LKO,Monday,Clear,13,1
+579,22692,MAS,Wednesday,Light Rain,2,1
+580,12908,JP,Monday,Clear,0,1
+581,12951,NDLS,Saturday,Clear,17,0
+582,20901,SBC,Saturday,Clear,27,0
+583,22692,CNB,Wednesday,Clear,7,1
+584,12302,MMCT,Sunday,Light Rain,13,1
+585,22692,NDLS,Friday,Clear,13,1
+586,12951,CNB,Tuesday,Clear,15,1
+587,12302,NDLS,Wednesday,Clear,32,0
+588,20901,NGP,Sunday,Clear,30,0
+589,12952,HWH,Monday,Clear,1,1
+590,12301,CNB,Saturday,Fog/Mist,52,0
+591,12002,LKO,Wednesday,Overcast,0,1
+592,12908,ADI,Wednesday,Clear,50,0
+593,12951,CNB,Thursday,Thunderstorm,26,0
+594,12952,MAO,Wednesday,Clear,19,0
+595,22692,NDLS,Tuesday,Fog/Mist,40,0
+596,12002,NGP,Sunday,Overcast,20,0
+597,12908,CNB,Monday,Overcast,5,1
+598,22692,CNB,Tuesday,Clear,10,1
+599,12952,NGP,Wednesday,Light Rain,19,0
+600,12302,MAS,Sunday,Fog/Mist,123,0
+601,12302,MAS,Tuesday,Clear,5,1
+602,12951,MMCT,Wednesday,Clear,16,0
+603,12002,NDLS,Friday,Overcast,37,0
+604,12951,NDLS,Monday,Clear,22,0
+605,12952,MAO,Wednesday,Clear,33,0
+606,12952,CNB,Saturday,Fog/Mist,76,0
+607,12301,MMCT,Wednesday,Clear,2,1
+608,20901,MMCT,Thursday,Clear,12,1
+609,12302,ADI,Thursday,Clear,20,0
+610,22692,NGP,Sunday,Fog/Mist,89,0
+611,12002,CNB,Friday,Fog/Mist,44,0
+612,12302,BPL,Sunday,Clear,19,0
+613,12002,SBC,Thursday,Thunderstorm,61,0
+614,12908,ADI,Monday,Clear,23,0
+615,12301,JP,Wednesday,Overcast,21,0
+616,12002,MAO,Monday,Overcast,19,0
+617,12302,ADI,Tuesday,Clear,0,1
+618,12952,HWH,Thursday,Clear,7,1
+619,12002,NDLS,Friday,Clear,5,1
+620,20901,SBC,Tuesday,Fog/Mist,47,0
+621,12952,SBC,Wednesday,Clear,35,0
+622,12908,SBC,Thursday,Light Rain,1,1
+623,22692,NDLS,Saturday,Clear,32,0
+624,12951,MAO,Wednesday,Overcast,19,0
+625,12952,NDLS,Wednesday,Clear,6,1
+626,12302,HWH,Thursday,Light Rain,16,0
+627,12002,JP,Wednesday,Overcast,16,0
+628,12302,MAS,Sunday,Light Rain,22,0
+629,12002,MAS,Monday,Thunderstorm,44,0
+630,12301,NGP,Friday,Light Rain,16,0
+631,12002,JP,Wednesday,Clear,42,0
+632,12002,ADI,Tuesday,Fog/Mist,59,0
+633,12951,CNB,Sunday,Clear,22,0
+634,22692,MAO,Wednesday,Clear,12,1
+635,12002,HWH,Tuesday,Fog/Mist,44,0
+636,22692,BPL,Friday,Overcast,1,1
+637,20901,ADI,Tuesday,Overcast,1,1
+638,12952,SBC,Monday,Clear,6,1
+639,12002,BPL,Saturday,Clear,17,0
+640,12301,MAS,Saturday,Thunderstorm,44,0
+641,20901,ADI,Thursday,Clear,21,0
+642,12302,MAO,Tuesday,Fog/Mist,57,0
+643,12952,BPL,Monday,Clear,18,0
+644,12302,LKO,Monday,Clear,14,1
+645,12301,JP,Friday,Clear,1,1
+646,12302,CNB,Thursday,Clear,7,1
+647,12002,MAS,Saturday,Clear,5,1
+648,12952,CNB,Sunday,Clear,4,1
+649,22692,JP,Friday,Light Rain,2,1
+650,20901,MMCT,Saturday,Clear,11,1
+651,12302,HWH,Saturday,Clear,17,0
+652,12908,SBC,Wednesday,Overcast,9,1
+653,12952,LKO,Tuesday,Clear,2,1
+654,22692,MMCT,Sunday,Clear,5,1
+655,12002,MAS,Sunday,Overcast,25,0
+656,12951,NGP,Friday,Clear,35,0
+657,20901,MAS,Sunday,Clear,57,0
+658,12951,LKO,Saturday,Clear,16,0
+659,12002,NDLS,Saturday,Clear,7,1
+660,12002,MAS,Friday,Clear,5,1
+661,12002,CNB,Sunday,Clear,39,0
+662,22692,NGP,Wednesday,Clear,5,1
+663,12301,MAS,Wednesday,Light Rain,16,0
+664,12951,CNB,Friday,Light Rain,26,0
+665,12302,BPL,Monday,Fog/Mist,60,0
+666,12952,HWH,Monday,Clear,4,1
+667,20901,ADI,Saturday,Clear,8,1
+668,20901,SBC,Monday,Clear,12,1
+669,12951,CNB,Thursday,Clear,1,1
+670,12951,SBC,Wednesday,Clear,8,1
+671,12951,MMCT,Sunday,Clear,8,1
+672,12908,MAS,Sunday,Clear,29,0
+673,12908,HWH,Thursday,Clear,6,1
+674,12301,LKO,Monday,Fog/Mist,47,0
+675,12951,NGP,Sunday,Clear,10,1
+676,12952,BPL,Sunday,Fog/Mist,59,0
+677,12951,MAO,Wednesday,Clear,3,1
+678,20901,LKO,Sunday,Fog/Mist,35,0
+679,20901,NDLS,Saturday,Clear,12,1
+680,12951,LKO,Monday,Clear,1,1
+681,12952,LKO,Saturday,Overcast,3,1
+682,12908,MMCT,Wednesday,Clear,23,0
+683,12951,HWH,Saturday,Clear,29,0
+684,12002,BPL,Saturday,Clear,2,1
+685,12952,BPL,Friday,Fog/Mist,49,0
+686,20901,SBC,Wednesday,Clear,1,1
+687,12951,SBC,Friday,Clear,18,0
+688,22692,JP,Friday,Clear,13,1
+689,12952,MAS,Friday,Clear,5,1
+690,12301,LKO,Thursday,Clear,6,1
+691,12908,HWH,Saturday,Fog/Mist,51,0
+692,20901,SBC,Monday,Clear,23,0
+693,12302,MMCT,Saturday,Clear,18,0
+694,12002,BPL,Sunday,Clear,12,1
+695,12302,HWH,Monday,Clear,22,0
+696,12951,LKO,Sunday,Clear,3,1
+697,22692,NDLS,Friday,Overcast,15,1
+698,12908,MAS,Thursday,Light Rain,0,1
+699,20901,JP,Wednesday,Clear,10,1
+700,12908,BPL,Sunday,Clear,6,1
+701,22692,BPL,Friday,Thunderstorm,40,0
+702,20901,MMCT,Sunday,Light Rain,4,1
+703,12951,MMCT,Friday,Clear,5,1
+704,12002,LKO,Friday,Clear,9,1
+705,22692,SBC,Tuesday,Clear,35,0
+706,20901,MMCT,Saturday,Clear,6,1
+707,20901,MAS,Tuesday,Clear,22,0
+708,22692,LKO,Tuesday,Clear,19,0
+709,22692,SBC,Wednesday,Clear,31,0
+710,22692,NDLS,Tuesday,Thunderstorm,56,0
+711,12301,HWH,Sunday,Clear,19,0
+712,22692,NGP,Sunday,Clear,1,1
+713,22692,SBC,Monday,Clear,11,1
+714,12302,MAO,Monday,Clear,13,1
+715,20901,MAS,Sunday,Fog/Mist,67,0
+716,12908,MAS,Saturday,Fog/Mist,61,0
+717,12952,HWH,Wednesday,Clear,18,0
+718,12301,LKO,Wednesday,Clear,2,1
+719,12301,MMCT,Monday,Fog/Mist,37,0
+720,12002,SBC,Sunday,Fog/Mist,40,0
+721,12951,LKO,Thursday,Clear,17,0
+722,12302,SBC,Saturday,Thunderstorm,38,0
+723,12951,MAS,Friday,Clear,47,0
+724,12951,NDLS,Saturday,Clear,7,1
+725,12951,NGP,Friday,Clear,1,1
+726,20901,MAS,Saturday,Clear,3,1
+727,12302,BPL,Friday,Clear,12,1
+728,12301,MAO,Sunday,Clear,2,1
+729,12908,MMCT,Wednesday,Clear,29,0
+730,12302,MAO,Saturday,Overcast,1,1
+731,22692,HWH,Tuesday,Clear,9,1
+732,12002,ADI,Thursday,Light Rain,30,0
+733,12908,NDLS,Wednesday,Clear,64,0
+734,20901,MMCT,Wednesday,Light Rain,46,0
+735,12952,MMCT,Wednesday,Clear,7,1
+736,12301,LKO,Thursday,Fog/Mist,63,0
+737,12952,CNB,Sunday,Clear,20,0
+738,12302,MAS,Tuesday,Clear,2,1
+739,12301,MAS,Saturday,Clear,6,1
+740,12301,NGP,Sunday,Clear,11,1
+741,22692,BPL,Thursday,Clear,11,1
+742,12952,CNB,Wednesday,Clear,7,1
+743,20901,MMCT,Saturday,Clear,0,1
+744,22692,ADI,Saturday,Clear,6,1
+745,12908,HWH,Monday,Clear,2,1
+746,12002,JP,Saturday,Light Rain,23,0
+747,12951,LKO,Tuesday,Fog/Mist,57,0
+748,12951,NGP,Thursday,Light Rain,8,1
+749,20901,BPL,Tuesday,Fog/Mist,37,0
+750,20901,HWH,Saturday,Fog/Mist,62,0
+751,12002,MMCT,Sunday,Fog/Mist,51,0
+752,12002,MMCT,Thursday,Thunderstorm,51,0
+753,20901,ADI,Monday,Clear,9,1
+754,20901,BPL,Saturday,Overcast,24,0
+755,12302,MMCT,Monday,Overcast,6,1
+756,12908,MAS,Friday,Clear,9,1
+757,12908,CNB,Wednesday,Fog/Mist,39,0
+758,12951,MAO,Sunday,Clear,2,1
+759,12301,NDLS,Wednesday,Clear,41,0
+760,12301,MAS,Friday,Clear,33,0
+761,12908,NGP,Saturday,Clear,1,1
+762,22692,HWH,Monday,Overcast,5,1
+763,12301,MMCT,Tuesday,Light Rain,6,1
+764,12002,NGP,Tuesday,Clear,3,1
+765,12951,MAO,Saturday,Clear,14,1
+766,12951,MAS,Thursday,Thunderstorm,27,0
+767,12951,NGP,Wednesday,Clear,27,0
+768,12908,BPL,Tuesday,Clear,12,1
+769,20901,MMCT,Friday,Clear,5,1
+770,22692,CNB,Tuesday,Thunderstorm,33,0
+771,12951,MAO,Tuesday,Clear,10,1
+772,12002,LKO,Monday,Clear,10,1
+773,12951,SBC,Sunday,Clear,22,0
+774,12951,MAO,Sunday,Clear,0,1
+775,20901,SBC,Monday,Clear,5,1
+776,20901,MMCT,Friday,Clear,16,0
+777,12951,HWH,Thursday,Thunderstorm,44,0
+778,12908,MAS,Sunday,Clear,27,0
+779,22692,JP,Saturday,Clear,2,1
+780,12302,MAO,Saturday,Light Rain,27,0
+781,20901,SBC,Sunday,Light Rain,24,0
+782,12002,JP,Sunday,Overcast,11,1
+783,22692,BPL,Wednesday,Clear,3,1
+784,22692,MMCT,Saturday,Clear,18,0
+785,12952,BPL,Thursday,Light Rain,25,0
+786,12002,MAO,Friday,Clear,1,1
+787,12951,MMCT,Friday,Clear,4,1
+788,12002,ADI,Tuesday,Clear,4,1
+789,22692,MAS,Saturday,Fog/Mist,59,0
+790,12301,MAO,Monday,Light Rain,7,1
+791,12951,MAO,Sunday,Clear,10,1
+792,12908,LKO,Friday,Light Rain,34,0
+793,12301,HWH,Wednesday,Clear,40,0
+794,12302,NDLS,Thursday,Fog/Mist,56,0
+795,12908,HWH,Wednesday,Clear,7,1
+796,12302,MMCT,Thursday,Overcast,17,0
+797,12951,SBC,Sunday,Thunderstorm,62,0
+798,20901,BPL,Wednesday,Overcast,15,1
+799,20901,MAS,Tuesday,Clear,10,1
+800,20901,MAS,Saturday,Overcast,8,1
+801,12301,ADI,Thursday,Overcast,4,1
+802,12951,LKO,Wednesday,Clear,2,1
+803,12952,HWH,Thursday,Clear,2,1
+804,12301,NGP,Saturday,Clear,5,1
+805,12002,ADI,Sunday,Clear,24,0
+806,12301,MAO,Saturday,Clear,10,1
+807,12951,NGP,Thursday,Fog/Mist,68,0
+808,12952,ADI,Thursday,Clear,3,1
+809,12951,MAS,Sunday,Thunderstorm,29,0
+810,12002,JP,Saturday,Clear,9,1
+811,12908,MMCT,Sunday,Clear,6,1
+812,12002,MAO,Wednesday,Clear,16,0
+813,12908,CNB,Sunday,Fog/Mist,36,0
+814,12302,ADI,Sunday,Fog/Mist,37,0
+815,22692,HWH,Monday,Clear,4,1
+816,12951,CNB,Monday,Clear,0,1
+817,12301,LKO,Sunday,Clear,14,1
+818,12952,ADI,Friday,Clear,21,0
+819,12302,MMCT,Wednesday,Overcast,4,1
+820,12002,SBC,Friday,Clear,10,1
+821,12301,SBC,Sunday,Fog/Mist,61,0
+822,12908,NGP,Wednesday,Clear,12,1
+823,22692,LKO,Sunday,Clear,3,1
+824,12952,JP,Tuesday,Fog/Mist,84,0
+825,12908,MAO,Saturday,Light Rain,1,1
+826,22692,CNB,Saturday,Thunderstorm,45,0
+827,12301,HWH,Saturday,Clear,6,1
+828,12301,SBC,Tuesday,Thunderstorm,25,0
+829,12302,BPL,Sunday,Fog/Mist,65,0
+830,20901,NDLS,Wednesday,Clear,18,0
+831,20901,NDLS,Thursday,Clear,12,1
+832,12301,NDLS,Friday,Clear,49,0
+833,12301,BPL,Sunday,Clear,15,1
+834,20901,JP,Saturday,Fog/Mist,35,0
+835,20901,BPL,Saturday,Clear,29,0
+836,12301,NGP,Friday,Overcast,3,1
+837,12301,LKO,Sunday,Clear,15,0
+838,12952,JP,Wednesday,Clear,2,1
+839,20901,SBC,Wednesday,Clear,6,1
+840,12302,LKO,Saturday,Overcast,12,1
+841,12952,MAO,Tuesday,Clear,3,1
+842,22692,MMCT,Thursday,Clear,23,0
+843,12302,NDLS,Wednesday,Light Rain,2,1
+844,20901,ADI,Saturday,Clear,4,1
+845,12302,CNB,Sunday,Clear,12,1
+846,12302,MAO,Monday,Clear,45,0
+847,12301,SBC,Friday,Light Rain,9,1
+848,12952,CNB,Monday,Fog/Mist,77,0
+849,12951,BPL,Saturday,Clear,12,1
+850,12951,LKO,Sunday,Light Rain,8,1
+851,12908,JP,Friday,Fog/Mist,61,0
+852,12908,NGP,Monday,Clear,6,1
+853,12002,NGP,Monday,Clear,6,1
+854,12908,HWH,Thursday,Clear,2,1
+855,12951,NDLS,Saturday,Clear,19,0
+856,12301,ADI,Monday,Clear,31,0
+857,12301,LKO,Saturday,Fog/Mist,82,0
+858,12002,JP,Monday,Clear,20,0
+859,12908,MAS,Sunday,Overcast,1,1
+860,12302,LKO,Tuesday,Overcast,4,1
+861,22692,HWH,Thursday,Clear,15,1
+862,12908,SBC,Monday,Clear,5,1
+863,12302,SBC,Friday,Clear,46,0
+864,12952,MAO,Saturday,Overcast,23,0
+865,12952,MAS,Saturday,Clear,36,0
+866,12002,NGP,Thursday,Light Rain,6,1
+867,20901,SBC,Wednesday,Clear,34,0
+868,12002,MAS,Sunday,Clear,8,1
+869,20901,MMCT,Tuesday,Clear,15,1
+870,12002,MAO,Monday,Fog/Mist,46,0
+871,12908,SBC,Tuesday,Fog/Mist,45,0
+872,20901,NDLS,Saturday,Thunderstorm,30,0
+873,12951,JP,Thursday,Clear,3,1
+874,12951,MAS,Tuesday,Fog/Mist,39,0
+875,12302,SBC,Sunday,Clear,3,1
+876,12301,NGP,Wednesday,Overcast,24,0
+877,22692,MAS,Wednesday,Clear,5,1
+878,22692,NDLS,Saturday,Clear,32,0
+879,12002,BPL,Thursday,Fog/Mist,58,0
+880,22692,LKO,Wednesday,Clear,1,1
+881,12952,MAS,Thursday,Clear,6,1
+882,12002,LKO,Sunday,Overcast,6,1
+883,12301,BPL,Monday,Clear,31,0
+884,12002,ADI,Friday,Clear,15,0
+885,12952,NDLS,Thursday,Clear,6,1
+886,22692,NDLS,Wednesday,Clear,5,1
+887,22692,HWH,Saturday,Clear,3,1
+888,12301,NGP,Saturday,Light Rain,0,1
+889,12002,JP,Wednesday,Clear,82,0
+890,12951,NGP,Thursday,Clear,7,1
+891,12952,CNB,Monday,Clear,4,1
+892,12951,SBC,Sunday,Thunderstorm,28,0
+893,20901,BPL,Friday,Clear,8,1
+894,20901,MMCT,Wednesday,Overcast,24,0
+895,12951,BPL,Wednesday,Thunderstorm,34,0
+896,12952,MAO,Saturday,Light Rain,24,0
+897,12908,LKO,Wednesday,Fog/Mist,76,0
+898,12302,SBC,Friday,Clear,4,1
+899,12952,CNB,Sunday,Light Rain,14,1
+900,20901,NGP,Tuesday,Clear,3,1
+901,12952,SBC,Thursday,Fog/Mist,62,0
+902,12002,NGP,Monday,Clear,9,1
+903,20901,MAS,Tuesday,Fog/Mist,48,0
+904,12002,LKO,Saturday,Clear,11,1
+905,22692,LKO,Wednesday,Light Rain,17,0
+906,12952,NGP,Friday,Fog/Mist,41,0
+907,12302,SBC,Saturday,Clear,2,1
+908,12002,MAS,Tuesday,Clear,7,1
+909,12952,JP,Wednesday,Fog/Mist,40,0
+910,22692,JP,Tuesday,Clear,31,0
+911,20901,HWH,Tuesday,Overcast,2,1
+912,12302,CNB,Wednesday,Clear,6,1
+913,12301,NGP,Sunday,Clear,2,1
+914,12952,JP,Monday,Light Rain,6,1
+915,12951,MAS,Saturday,Clear,2,1
+916,12301,CNB,Thursday,Clear,1,1
+917,12952,BPL,Thursday,Clear,20,0
+918,12951,LKO,Sunday,Clear,8,1
+919,22692,MAO,Sunday,Overcast,8,1
+920,12002,MMCT,Friday,Clear,1,1
+921,22692,NDLS,Saturday,Fog/Mist,64,0
+922,12908,NGP,Friday,Overcast,1,1
+923,12301,SBC,Friday,Overcast,12,1
+924,12002,CNB,Sunday,Clear,12,1
+925,22692,MAO,Friday,Fog/Mist,104,0
+926,12908,MMCT,Friday,Thunderstorm,30,0
+927,12302,NDLS,Wednesday,Clear,18,0
+928,12951,BPL,Tuesday,Clear,5,1
+929,22692,CNB,Friday,Clear,23,0
+930,12302,NDLS,Thursday,Light Rain,2,1
+931,22692,JP,Thursday,Fog/Mist,46,0
+932,12302,JP,Wednesday,Clear,7,1
+933,12002,MMCT,Thursday,Overcast,7,1
+934,12908,MAS,Wednesday,Clear,13,1
+935,12952,JP,Monday,Clear,7,1
+936,12952,HWH,Sunday,Light Rain,4,1
+937,12301,MAO,Monday,Clear,5,1
+938,12951,JP,Friday,Light Rain,35,0
+939,20901,ADI,Sunday,Clear,2,1
+940,12002,JP,Wednesday,Clear,1,1
+941,12302,MAS,Tuesday,Clear,18,0
+942,12952,NDLS,Wednesday,Overcast,6,1
+943,12002,HWH,Friday,Clear,42,0
+944,12908,NGP,Friday,Clear,25,0
+945,12952,MAO,Friday,Thunderstorm,29,0
+946,22692,BPL,Wednesday,Fog/Mist,43,0
+947,20901,BPL,Saturday,Light Rain,31,0
+948,12908,MMCT,Saturday,Light Rain,14,1
+949,12301,CNB,Saturday,Overcast,15,1
+950,12908,MMCT,Saturday,Clear,25,0
+951,12301,CNB,Sunday,Light Rain,4,1
+952,12302,BPL,Wednesday,Light Rain,1,1
+953,22692,CNB,Thursday,Clear,7,1
+954,12951,CNB,Monday,Clear,27,0
+955,12302,BPL,Saturday,Light Rain,9,1
+956,22692,JP,Monday,Clear,8,1
+957,12951,NDLS,Wednesday,Fog/Mist,38,0
+958,12908,NGP,Thursday,Clear,8,1
+959,22692,CNB,Friday,Clear,8,1
+960,12302,NDLS,Friday,Overcast,12,1
+961,12301,HWH,Thursday,Clear,4,1
+962,22692,SBC,Tuesday,Thunderstorm,35,0
+963,12952,SBC,Sunday,Clear,24,0
+964,12952,NGP,Thursday,Light Rain,10,1
+965,12952,MMCT,Tuesday,Overcast,10,1
+966,20901,BPL,Saturday,Overcast,0,1
+967,12951,MMCT,Wednesday,Fog/Mist,52,0
+968,12908,LKO,Saturday,Clear,7,1
+969,12301,ADI,Friday,Clear,4,1
+970,12301,HWH,Tuesday,Overcast,59,0
+971,12002,MMCT,Tuesday,Clear,7,1
+972,12002,BPL,Sunday,Clear,53,0
+973,22692,NGP,Monday,Clear,40,0
+974,12952,MMCT,Sunday,Overcast,1,1
+975,12952,MMCT,Monday,Clear,13,1
+976,12002,CNB,Wednesday,Clear,3,1
+977,12302,ADI,Sunday,Fog/Mist,105,0
+978,12301,LKO,Monday,Clear,25,0
+979,12952,JP,Tuesday,Light Rain,13,1
+980,12908,MAO,Saturday,Clear,11,1
+981,12302,NDLS,Wednesday,Clear,1,1
+982,12952,BPL,Monday,Clear,31,0
+983,12952,HWH,Monday,Overcast,17,0
+984,12302,LKO,Tuesday,Clear,34,0
+985,12952,HWH,Monday,Clear,1,1
+986,12908,HWH,Thursday,Overcast,2,1
+987,12908,NDLS,Thursday,Clear,21,0
+988,12302,BPL,Wednesday,Fog/Mist,49,0
+989,20901,BPL,Friday,Clear,4,1
+990,12002,JP,Thursday,Clear,15,0
+991,12951,MAO,Thursday,Clear,32,0
+992,12908,MMCT,Tuesday,Fog/Mist,64,0
+993,12302,ADI,Saturday,Fog/Mist,46,0
+994,12908,NGP,Wednesday,Clear,61,0
+995,12951,MMCT,Thursday,Clear,7,1
+996,20901,CNB,Wednesday,Clear,0,1
+997,12002,MAS,Thursday,Clear,4,1
+998,12951,MMCT,Thursday,Fog/Mist,57,0
+999,12002,CNB,Wednesday,Overcast,24,0
+1000,12951,MMCT,Monday,Clear,8,1

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Train Tracking & Route Timeline - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+    .telemetry-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+    .telemetry-card span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .telemetry-card strong {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      display: block;
+    }
+
+    /* Vertical Route Timeline Styles */
+    .timeline-wrapper-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .timeline-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .route-progress-badge {
+      background: rgba(19, 64, 116, 0.1);
+      color: var(--primary-navy);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+    }
+    .route-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin-bottom: 2.25rem;
+    }
+    .route-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2a9d8f, #f77f00);
+      border-radius: var(--radius-full);
+      transition: width 0.6s ease;
+    }
+    .route-timeline {
+      position: relative;
+      padding-left: 2.75rem;
+    }
+    .route-timeline::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      bottom: 20px;
+      left: 17px;
+      width: 4px;
+      background: #e2e8f0;
+      border-radius: 2px;
+    }
+    .timeline-step {
+      position: relative;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-node-icon {
+      position: absolute;
+      left: -2.75rem;
+      top: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 800;
+      z-index: 2;
+      background: white;
+      border: 3px solid #cbd5e1;
+      color: #64748b;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+    .timeline-step.completed .timeline-node-icon {
+      background: #2a9d8f;
+      border-color: #2a9d8f;
+      color: white;
+    }
+    .timeline-step.current .timeline-node-icon {
+      background: #f77f00;
+      border-color: #ffffff;
+      color: white;
+      box-shadow: 0 0 0 5px rgba(247, 127, 0, 0.35);
+      animation: pulse-ring 2s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(247, 127, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(247, 127, 0, 0); }
+    }
+    .timeline-card-content {
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-left: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .timeline-step.current .timeline-card-content {
+      background: #fffaf0;
+      border: 2px solid #f77f00;
+      box-shadow: 0 6px 16px rgba(247, 127, 0, 0.12);
+    }
+    .timeline-step.completed .timeline-card-content {
+      background: #ffffff;
+      border-color: #e2e8f0;
+    }
+    .timeline-station-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .timeline-station-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .timeline-seq-chip {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--primary-navy);
+      color: white;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .timeline-times-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      background: white;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .time-slot label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .time-slot strong {
+      font-size: 1.05rem;
+      color: var(--primary-navy);
+    }
+    .current-train-special-banner {
+      background: linear-gradient(135deg, #f77f00 0%, #ee6c4d 100%);
+      color: white;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.35rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      box-shadow: 0 4px 14px rgba(238, 108, 77, 0.35);
+    }
+
+    /* Passing Points & Halts Styling */
+    .timeline-step.passing-step .timeline-node-icon {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #64748b;
+      font-size: 0.8rem;
+    }
+    .timeline-step.passing-step.completed .timeline-node-icon {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      color: #475569;
+    }
+    .timeline-step.passing-step .timeline-card-content {
+      background: #fdfdfd;
+      border: 1px dashed #cbd5e1;
+      padding: 0.9rem 1.25rem;
+    }
+    .timeline-step.passing-step.completed .timeline-card-content {
+      background: #fafafa;
+      border-color: #e2e8f0;
+    }
+    .passing-time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+    }
+    .passing-time-badge.estimated {
+      border-left: 3px solid #f77f00;
+      background: #fffaf0;
+    }
+
+    /* Level 2 Section Divider & Accordion Styles */
+    .timeline-section-connector {
+      position: relative;
+      margin: 1.25rem 0 1.75rem;
+      padding-left: 0.5rem;
+    }
+    .timeline-section-connector .section-node-dot {
+      position: absolute;
+      left: -2.75rem;
+      top: 18px;
+      width: 24px;
+      height: 24px;
+      margin-left: 7px;
+      border-radius: 50%;
+      background: white;
+      border: 2px dashed #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 0.7rem;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    .timeline-section-connector.current .section-node-dot {
+      border: 2px solid #f77f00;
+      background: #f77f00;
+      color: white;
+      box-shadow: 0 0 0 4px rgba(247, 127, 0, 0.35);
+      animation: pulse-ring 2s infinite;
+    }
+    .section-accordion-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .section-accordion-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+    }
+    .section-accordion-card.current-section {
+      border: 2px solid #f77f00;
+      background: #fffdfa;
+      box-shadow: 0 4px 18px rgba(247, 127, 0, 0.16);
+    }
+    .section-accordion-card.expanded {
+      border-color: var(--primary-blue);
+      box-shadow: 0 6px 20px rgba(19, 64, 116, 0.1);
+    }
+    .section-trigger-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.35rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: background 0.2s ease;
+    }
+    .section-trigger-btn:hover {
+      background: rgba(0,0,0,0.02);
+    }
+    .section-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .section-leg-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .section-meta-chips {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .section-action-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: var(--primary-navy);
+      border: 1px solid #cbd5e1;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .section-accordion-card:hover .section-action-pill {
+      background: #e2e8f0;
+      border-color: #94a3b8;
+    }
+    .section-accordion-card.expanded .section-action-pill {
+      background: var(--primary-navy);
+      color: white;
+      border-color: var(--primary-navy);
+    }
+    .section-drawer {
+      border-top: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      padding: 1.15rem 1.35rem;
+      display: none;
+    }
+    .section-accordion-card.expanded .section-drawer {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .drawer-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .intermediate-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      padding-left: 1.75rem;
+    }
+    .intermediate-list::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 7px;
+      width: 2px;
+      background: #cbd5e1;
+    }
+    .intermediate-item {
+      position: relative;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .intermediate-item::before {
+      content: '';
+      position: absolute;
+      left: -1.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      margin-left: 3px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #94a3b8;
+      z-index: 1;
+    }
+    .intermediate-item.completed::before {
+      background: #2a9d8f;
+      border-color: #2a9d8f;
+    }
+    .intermediate-item.current::before {
+      background: #f77f00;
+      border-color: #f77f00;
+      box-shadow: 0 0 0 4px rgba(247, 127, 0, 0.35);
+    }
+    .intermediate-item.current {
+      border: 1.5px solid #f77f00;
+      background: #fffaf0;
+    }
+
+
+    /* Filter Bar */
+    .timeline-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #f8fafc;
+      padding: 0.65rem 1.15rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .timeline-filter-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .filter-btn-group {
+      display: flex;
+      gap: 0.4rem;
+      background: #e2e8f0;
+      padding: 3px;
+      border-radius: var(--radius-sm);
+    }
+    .btn-timeline-filter {
+      background: transparent;
+      border: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-timeline-filter:hover {
+      color: var(--primary-navy);
+    }
+    .btn-timeline-filter.active {
+      background: white;
+      color: var(--primary-navy);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      font-weight: 700;
+    }
+
+    /* In-Transit Marker Between Stations */
+    .current-train-inline-marker {
+      position: relative;
+      margin: 1.25rem 0 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .current-train-inline-marker .timeline-node-icon {
+      background: #f77f00;
+      border-color: #ffffff;
+      color: white;
+      box-shadow: 0 0 0 5px rgba(247, 127, 0, 0.35);
+      animation: pulse-ring 2s infinite;
+    }
+
+    /* Operational Running Status Alert Banners */
+    .route-status-alert {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.35rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .route-status-alert i {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .route-status-alert.not-running {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+    }
+    .route-status-alert.not-running i {
+      color: #64748b;
+    }
+    .route-status-alert.scheduled {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+    .route-status-alert.scheduled i {
+      color: #2563eb;
+    }
+    .route-status-alert.completed {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .route-status-alert.completed i {
+      color: #16a34a;
+    }
+    .route-status-alert.unavailable {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+    }
+    .route-status-alert.unavailable i {
+      color: #d97706;
+    }
+
+    @media (max-width: 640px) {
+      .route-timeline {
+        padding-left: 2rem;
+      }
+      .route-timeline::before {
+        left: 13px;
+      }
+      .timeline-node-icon {
+        left: -2rem;
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+      }
+      .timeline-card-content {
+        padding: 0.85rem;
+        margin-left: 0.25rem;
+      }
+      .timeline-times-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .current-train-special-banner {
+        padding: 0.85rem;
+      }
+      .timeline-filter-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      #filter-summary-chip {
+        margin-left: 0 !important;
+        margin-top: 0.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html" class="active"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <div class="badge" style="background: rgba(42, 157, 143, 0.12); color: #1b685f; margin-bottom: 0.5rem;">
+          <i class="fa-solid fa-satellite-dish fa-fade"></i> LIVE ROUTE TELEMETRY
+        </div>
+        <h1 style="font-size: 2rem; color: var(--primary-navy); margin-bottom: 0.25rem;">Live Train Route & Station Progression</h1>
+        <p style="color: var(--text-secondary);">Real-time tracking of intermediate halts, arrival/departure schedules, and current train position along the route timeline.</p>
+      </div>
+
+      <div style="min-width: 320px;">
+        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; display: block;">Select Train to Track:</label>
+        <select id="select-tracking-train" class="form-control">
+          <!-- Injected by live-tracking.js -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Telemetry Cards -->
+    <div class="telemetry-grid">
+      <div class="telemetry-card" style="border-left: 4px solid var(--primary-blue);">
+        <span>Train & Route</span>
+        <strong id="telemetry-train-title" style="font-size: 1.15rem;">Loading...</strong>
+        <small id="telemetry-route" style="color: var(--text-muted); font-size: 0.8rem;">--</small>
+      </div>
+
+      <div class="telemetry-card" style="border-left: 4px solid var(--accent-saffron);">
+        <span>Live Speedometer</span>
+        <strong id="telemetry-speed">-- km/h</strong>
+        <small id="telemetry-speed-desc" style="color: var(--text-muted); font-size: 0.8rem;">Section Running Speed</small>
+      </div>
+
+      <div class="telemetry-card" style="border-left: 4px solid var(--accent-green);">
+        <span>Punctuality Status</span>
+        <div style="margin-top: 0.25rem;">
+          <span id="telemetry-delay-badge" class="badge badge-available">On Time</span>
+        </div>
+        <small id="telemetry-delay-desc" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px; display: block;">Calculated vs. Section Timetable</small>
+      </div>
+
+      <div class="telemetry-card" style="border-left: 4px solid #7928ca;">
+        <span>Next Station & ETA</span>
+        <strong id="telemetry-next-station" style="font-size: 1.15rem;">--</strong>
+        <small id="telemetry-eta" style="color: var(--text-muted); font-size: 0.8rem;">ETA: --</small>
+      </div>
+
+      <div class="telemetry-card" style="border-left: 4px solid var(--accent-gold);">
+        <span>Distance Covered</span>
+        <strong id="telemetry-distance">-- km</strong>
+        <small id="telemetry-progress-text" style="color: var(--text-muted); font-size: 0.8rem;">-- % Route Completed</small>
+      </div>
+    </div>
+
+    <!-- Vertical Railway Route Timeline Container -->
+    <div class="timeline-wrapper-card">
+      <div class="timeline-header-bar">
+        <div>
+          <h2 style="font-size: 1.35rem; color: var(--primary-navy); margin-bottom: 0.25rem;">
+            <i class="fa-solid fa-route" style="color: var(--accent-saffron); margin-right: 6px;"></i> Complete Ordered Station Route
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;" id="timeline-subtitle">
+            Showing all intermediate halts and current train location.
+          </p>
+        </div>
+        <div class="route-progress-badge" id="timeline-progress-pill">
+          0% Completed
+        </div>
+      </div>
+
+      <!-- Route Progress Fill Bar -->
+      <div class="route-progress-track">
+        <div class="route-progress-fill" id="route-progress-bar" style="width: 0%;"></div>
+      </div>
+
+      <!-- Timeline Filter Toggle Bar (Requirement 9) -->
+      <div class="timeline-filter-bar">
+        <span class="timeline-filter-label"><i class="fa-solid fa-sliders"></i> Show:</span>
+        <div class="filter-btn-group">
+          <button type="button" class="btn-timeline-filter active" id="filter-all-btn" data-filter="all">All Stations</button>
+          <button type="button" class="btn-timeline-filter" id="filter-halts-btn" data-filter="halts">Scheduled Halts Only</button>
+        </div>
+        <span id="filter-summary-chip" style="margin-left: auto; font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">
+          All Stations & Passing Points
+        </span>
+      </div>
+
+      <!-- Vertical Timeline of All Stops -->
+      <div id="route-timeline-container" class="route-timeline">
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          <div class="spinner"></div>
+          <p style="margin-top: 0.75rem;">Loading ordered station timetable...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/live-tracking.js"></script>
+</body>
+</html>

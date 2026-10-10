@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Railway Assistant - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .chat-container-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-lg);
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      height: 680px;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 100%);
+      color: white;
+      padding: 1.25rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      background: var(--bg-slate);
+    }
+    .chat-bubble {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 82%;
+    }
+    .chat-user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .chat-bot {
+      align-self: flex-start;
+    }
+    .chat-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+    .user-avatar {
+      background: var(--primary-navy);
+      color: white;
+    }
+    .bot-avatar {
+      background: linear-gradient(135deg, #7928ca, #ff0080);
+      color: white;
+    }
+    .chat-bubble-content {
+      background: white;
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border: 1px solid var(--border-light);
+    }
+    .chat-user .chat-bubble-content {
+      background: var(--primary-navy);
+      color: white;
+      border-color: var(--primary-navy);
+    }
+    .chat-suggestions {
+      padding: 0.75rem 1.5rem;
+      background: white;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .suggestion-chip {
+      padding: 0.4rem 0.85rem;
+      background: var(--bg-slate);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--primary-navy);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .suggestion-chip:hover {
+      background: rgba(19, 64, 116, 0.08);
+      border-color: var(--primary-blue);
+    }
+    .chat-input-container {
+      padding: 1rem 1.5rem;
+      background: white;
+      border-top: 1px solid var(--border-light);
+    }
+    .typing-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      margin: 0 2px;
+      animation: typing 1.2s infinite ease-in-out;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .chat-action-btn {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-md);
+      background: white;
+      border: 1px solid var(--primary-blue);
+      color: var(--primary-navy);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      transition: all var(--transition-fast);
+    }
+    .chat-action-btn:hover {
+      background: var(--primary-navy);
+      color: white;
+      border-color: var(--primary-navy);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html" class="active"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="chat-container-card">
+      <div class="chat-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #7928ca, #ff0080); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <h3 style="font-size: 1.15rem; color: white; margin-bottom: 2px;">SmartRail AI Assistant</h3>
+            <span style="font-size: 0.75rem; color: #cbd5e1; display: flex; align-items: center; gap: 4px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); display: inline-block;"></span> Online | TF-IDF NLP Engine
+            </span>
+          </div>
+        </div>
+
+        <span class="badge badge-ai">OFFLINE AI ENGINE</span>
+      </div>
+
+      <!-- Messages Stream -->
+      <div class="chat-messages" id="chat-messages-container">
+        <!-- Initial Welcome Message -->
+        <div class="chat-bubble chat-bot">
+          <div class="chat-avatar bot-avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="chat-bubble-content">
+            <p>Namaste! 🙏 I am your <strong>Smart Railway AI Assistant</strong>.</p>
+            <p style="margin-top: 6px;">
+              I can help you check live PNR status, search trains, explain quota concessions, look up cancellation rules, or route emergency alerts. What can I do for you today?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prompt Suggestion Chips -->
+      <div class="chat-suggestions">
+        <span class="suggestion-chip" data-query="Check status for PNR 2846190532"><i class="fa-solid fa-ticket"></i> Check PNR 2846190532</span>
+        <span class="suggestion-chip" data-query="Find trains from Delhi to Mumbai"><i class="fa-solid fa-train"></i> Trains Delhi ➔ Mumbai</span>
+        <span class="suggestion-chip" data-query="How does Senior Citizen quota work?"><i class="fa-solid fa-percent"></i> Senior Citizen Quota</span>
+        <span class="suggestion-chip" data-query="How much is the ticket cancellation fee?"><i class="fa-solid fa-ban"></i> Cancellation Policy</span>
+        <span class="suggestion-chip" data-query="Emergency RPF helpline number"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red);"></i> Emergency SOS 139</span>
+      </div>
+
+      <!-- User Input Form -->
+      <div class="chat-input-container">
+        <form id="chat-form" style="display: flex; gap: 0.75rem;">
+          <input type="text" id="chat-input" class="form-control" placeholder="Type your railway query or 10-digit PNR..." autocomplete="off" required>
+          <button type="submit" class="btn btn-primary" style="padding: 0 1.5rem;">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

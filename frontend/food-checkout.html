@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Checkout - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .checkout-header {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-navy) 60%, var(--primary-blue) 100%);
+      color: white;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .checkout-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+    .checkout-steps {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.25rem;
+    }
+    .checkout-step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+    .checkout-step.active {
+      opacity: 1;
+      color: var(--accent-gold);
+    }
+    .checkout-step.completed {
+      opacity: 0.9;
+      color: #a7f3d0;
+    }
+    .step-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+    .checkout-step.active .step-circle {
+      background: var(--accent-gold);
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      margin: 2.5rem auto 4rem;
+      align-items: start;
+    }
+    @media (max-width: 992px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkout-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .checkout-card h3 {
+      font-size: 1.2rem;
+      color: var(--primary-navy);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.75rem;
+    }
+
+    /* Payment Methods */
+    .payment-option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .payment-option {
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .payment-option:hover {
+      border-color: var(--primary-light);
+    }
+    .payment-option.selected {
+      border-color: var(--accent-saffron);
+      background: #fff9f2;
+    }
+    .payment-radio {
+      accent-color: var(--accent-saffron);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Simulation disclaimer */
+    .sim-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Order Summary Column */
+    .summary-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-md);
+      padding: 1.5rem;
+      position: sticky;
+      top: 90px;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
+    }
+    .summary-divider {
+      border-top: 1px solid var(--border-light);
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <aside class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-item">
+        <i class="fa-solid fa-phone-volume"></i> 24&times;7 Railway Helpline: <strong>139</strong>
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item">
+        <i class="fa-solid fa-utensils"></i> Verified IRCTC e-Catering Partner Platform
+      </div>
+      <span class="top-bar-divider">|</span>
+      <div class="top-bar-item top-bar-security">
+        <i class="fa-solid fa-shield-halved"></i> 100% Hygienic Meal Guarantee
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container nav-three-section">
+      <div class="nav-brand">
+        <a href="index.html" class="brand-logo">
+          <i class="fa-solid fa-train-subway"></i>
+          <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+          <span class="brand-tag">Food</span>
+        </a>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html" class="active"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="nav-auth" id="nav-auth-container"></div>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="checkout-header">
+    <h1>Confirm Berth Delivery & Payment</h1>
+    <div class="checkout-steps">
+      <div class="checkout-step completed">
+        <span class="step-circle"><i class="fa-solid fa-check"></i></span>
+        <span>1. Select Food</span>
+      </div>
+      <div class="checkout-step active">
+        <span class="step-circle">2</span>
+        <span>2. Berth Details & Payment</span>
+      </div>
+      <div class="checkout-step">
+        <span class="step-circle">3</span>
+        <span>3. Live Timeline Tracking</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Checkout Container -->
+  <main class="container">
+    <div class="checkout-layout">
+      
+      <!-- Left Column: Form -->
+      <div>
+        <!-- Delivery Details -->
+        <div class="checkout-card">
+          <h3>
+            <i class="fa-solid fa-train-tram" style="color: var(--accent-saffron);"></i>
+            Train & Berth Delivery Details
+          </h3>
+          
+          <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  Passenger Full Name *
+                </label>
+                <input type="text" id="chk-passenger-name" class="form-control" placeholder="e.g. Ramesh Kumar" required>
+              </div>
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  10-Digit Mobile Number *
+                </label>
+                <input type="tel" id="chk-passenger-phone" class="form-control" placeholder="e.g. 9876543210" pattern="[0-9]{10}" maxlength="10" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  Train Number *
+                </label>
+                <input type="text" id="chk-train-number" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+              </div>
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  Coach Number *
+                </label>
+                <input type="text" id="chk-coach" class="form-control" placeholder="e.g. B1, S4, A1" required style="text-transform: uppercase;">
+              </div>
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  Seat / Berth Number *
+                </label>
+                <input type="text" id="chk-seat" class="form-control" placeholder="e.g. 34, 12, 60" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  PNR Number (Optional)
+                </label>
+                <input type="text" id="chk-pnr" class="form-control" placeholder="10-digit PNR" maxlength="10">
+              </div>
+              <div>
+                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                  Scheduled Delivery Station *
+                </label>
+                <input type="text" id="chk-station" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+              </div>
+            </div>
+
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                Delivery Note / Dietary Preferences (Optional)
+              </label>
+              <textarea id="chk-notes" class="form-control" rows="2" placeholder="e.g. Deliver promptly when train halts, extra napkins requested."></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="checkout-card">
+          <h3>
+            <i class="fa-solid fa-credit-card" style="color: var(--primary-navy);"></i>
+            Select Payment Method
+          </h3>
+
+          <div class="payment-option-grid">
+            <label class="payment-option selected" onclick="selectPaymentMethod('UPI')">
+              <input type="radio" name="payment_method" value="UPI" class="payment-radio" checked>
+              <div>
+                <div style="font-weight: 700; color: var(--primary-navy);"><i class="fa-solid fa-mobile-screen-button"></i> UPI / QR</div>
+                <small style="color: var(--text-muted);">GPay, PhonePe, Paytm</small>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('CARD')">
+              <input type="radio" name="payment_method" value="CARD" class="payment-radio">
+              <div>
+                <div style="font-weight: 700; color: var(--primary-navy);"><i class="fa-solid fa-credit-card"></i> Card</div>
+                <small style="color: var(--text-muted);">Visa, MasterCard, RuPay</small>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('NETBANKING')">
+              <input type="radio" name="payment_method" value="NETBANKING" class="payment-radio">
+              <div>
+                <div style="font-weight: 700; color: var(--primary-navy);"><i class="fa-solid fa-building-columns"></i> Net Banking</div>
+                <small style="color: var(--text-muted);">SBI, HDFC, ICICI, etc.</small>
+              </div>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('COD')">
+              <input type="radio" name="payment_method" value="COD" class="payment-radio">
+              <div>
+                <div style="font-weight: 700; color: var(--primary-navy);"><i class="fa-solid fa-hand-holding-dollar"></i> Pay on Delivery</div>
+                <small style="color: var(--text-muted);">Cash at your berth</small>
+              </div>
+            </label>
+          </div>
+
+          <div class="sim-banner">
+            <i class="fa-solid fa-shield-check" style="font-size: 1.25rem;"></i>
+            <div>
+              <strong>Secure Demonstration Gateway:</strong>
+              <div>No real banking charges will be made. Payment verification is automatically simulated upon order placement.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div>
+        <div class="summary-card">
+          <h3 style="font-size: 1.2rem; color: var(--primary-navy); margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem;">
+            <i class="fa-solid fa-receipt" style="color: var(--accent-saffron);"></i> Order Summary
+          </h3>
+
+          <div style="margin-bottom: 1rem;">
+            <div style="font-weight: 700; color: var(--primary-navy);" id="sum-restaurant-name">Restaurant Name</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);" id="sum-station-name">Delivery at Station</div>
+          </div>
+
+          <div id="sum-items-list" style="max-height: 220px; overflow-y: auto; margin-bottom: 1rem;">
+            <!-- Dynamically populated -->
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-item">
+            <span style="color: var(--text-muted);">Items Total</span>
+            <span style="font-weight: 600;" id="sum-subtotal">₹0.00</span>
+          </div>
+
+          <div class="summary-item">
+            <span style="color: var(--text-muted);">Station Berth Delivery</span>
+            <span style="font-weight: 600;" id="sum-delivery">₹20.00</span>
+          </div>
+
+          <div class="summary-item">
+            <span style="color: var(--text-muted);">GST & IRCTC Partner Taxes (5%)</span>
+            <span style="font-weight: 600;" id="sum-tax">₹0.00</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.15rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 1.5rem;">
+            <span>Grand Total</span>
+            <span id="sum-grand-total" style="color: var(--accent-saffron);">₹0.00</span>
+          </div>
+
+          <button class="btn btn-accent btn-block btn-lg" id="btn-place-order" onclick="document.getElementById('checkout-form').requestSubmit()">
+            <i class="fa-solid fa-lock"></i> Place Order Now
+          </button>
+
+          <a href="food-order.html" class="btn btn-sm btn-block" style="background: none; color: var(--text-muted); text-align: center; margin-top: 0.75rem;">
+            <i class="fa-solid fa-arrow-left"></i> Modify Food Tray
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <div class="footer-logo">SmartRail</div>
+        <p class="footer-desc">National Railway Ticket & e-Catering Food Ordering System. Fresh hot meals delivered to your train berth at major railway junctions.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Food Services</h4>
+        <ul class="footer-links">
+          <li><a href="food-order.html">Order Food on Train</a></li>
+          <li><a href="food-order-tracking.html">Track Active Food Order</a></li>
+          <li><a href="pnr-status.html">PNR Meal Status</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Passenger Safety</h4>
+        <ul class="footer-links">
+          <li><a href="emergency.html">Emergency SOS (139)</a></li>
+          <li><a href="live-tracking.html">Live GPS Movement</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/food_checkout.js"></script>
+</body>
+</html>

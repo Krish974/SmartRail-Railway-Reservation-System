@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Trains - Smart Indian Railway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .search-page-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .filter-sidebar {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 80px;
+    }
+    .filter-group {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .filter-group:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .filter-group h4 {
+      font-size: 0.95rem;
+      color: var(--primary-navy);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .train-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.75rem;
+    }
+    .train-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.25rem;
+    }
+    .train-number {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+    }
+    .train-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .running-days-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 0.35rem;
+    }
+    .running-days-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .days-pills-row {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .day-pill {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .day-pill.runs {
+      background: var(--primary-navy);
+      color: #ffffff;
+      border: 1px solid var(--primary-navy);
+    }
+    .day-pill.no-run {
+      background: #f1f5f9;
+      color: #94a3b8;
+      border: 1px solid #e2e8f0;
+    }
+    .day-pill.unavail {
+      background: #f8fafc;
+      color: #cbd5e1;
+      border: 1px dashed #cbd5e1;
+    }
+    .day-pill.selected {
+      outline: 2.5px solid var(--accent-saffron);
+      outline-offset: 1px;
+      font-weight: 800;
+      box-shadow: 0 0 5px rgba(247, 127, 0, 0.4);
+    }
+    .day-pill.selected.no-run {
+      outline: 2.5px solid #ef4444;
+      outline-offset: 1px;
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fca5a5;
+      box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+    }
+    .run-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .run-status-badge.run-status-runs {
+      background: rgba(42, 157, 143, 0.12);
+      color: #1b7a6f;
+      border: 1px solid rgba(42, 157, 143, 0.3);
+    }
+    .run-status-badge.run-status-not-runs {
+      background: rgba(230, 57, 70, 0.1);
+      color: #c92a2a;
+      border: 1px solid rgba(230, 57, 70, 0.3);
+    }
+    .run-status-badge.run-status-info {
+      background: rgba(19, 64, 116, 0.08);
+      color: var(--primary-blue);
+      border: 1px solid rgba(19, 64, 116, 0.2);
+    }
+    .run-status-badge.run-status-unavail {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+    .week-strip-chip {
+      background: white;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 6px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 64px;
+    }
+    .week-strip-chip:hover {
+      border-color: var(--primary-navy);
+      background: #f8fafc;
+    }
+    .week-strip-chip.active {
+      border-color: var(--accent-saffron);
+      background: #fff7ed;
+      box-shadow: 0 2px 6px rgba(247, 127, 0, 0.18);
+    }
+    .week-day-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .week-day-num {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      line-height: 1.2;
+    }
+    .week-strip-chip.active .week-day-name {
+      color: #c2410c;
+    }
+    .week-strip-chip.active .week-day-num {
+      color: #c2410c;
+    }
+    .non-running-train-card {
+      opacity: 0.82;
+      background: #fafbfc;
+      border-color: #cbd5e1;
+    }
+    .date-input-wrapper {
+      position: relative;
+      width: 100%;
+    }
+    .date-input-wrapper input[type="date"] {
+      cursor: pointer;
+      width: 100%;
+      height: 44px;
+      box-sizing: border-box;
+      color-scheme: light;
+      font-weight: 600;
+      background-color: #ffffff;
+      color: #1e293b;
+    }
+    .date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      font-size: 1.15rem;
+      padding: 4px;
+      opacity: 0.9;
+    }
+    .date-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+    .week-strip-chip.past-day {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f1f5f9;
+    }
+    .day-chip {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--bg-slate);
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      border: 1px solid var(--border-light);
+    }
+    .train-schedule-bar {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 1.5rem;
+      align-items: center;
+      background: var(--bg-slate);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    .station-stop .time {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      display: block;
+    }
+    .station-stop .code {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .station-stop .name {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: block;
+    }
+    .duration-indicator {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .duration-text {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      margin-bottom: 0.2rem;
+    }
+    .duration-line {
+      width: 140px;
+      height: 2px;
+      background: var(--border-dark);
+      position: relative;
+      margin: 0.25rem 0;
+    }
+    .duration-line i {
+      position: absolute;
+      top: -7px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--primary-blue);
+      background: var(--bg-slate);
+      padding: 0 4px;
+      font-size: 0.85rem;
+    }
+    .route-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .classes-row-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.65rem;
+    }
+    .classes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+    }
+    .class-card-box {
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 0.85rem;
+      background: white;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 82px;
+    }
+    .class-card-box:hover {
+      border-color: var(--primary-navy);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(11, 37, 69, 0.12);
+    }
+    .class-card-box.class-wl {
+      background: #fdfbf7;
+    }
+    .class-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+    .class-title {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--primary-navy);
+    }
+    .class-fare {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+    .autocomplete-wrapper {
+      position: relative;
+    }
+    .autocomplete-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 28px rgba(11, 37, 69, 0.2);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+      margin-top: 4px;
+    }
+    .autocomplete-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s ease;
+      color: #1e293b;
+    }
+    .autocomplete-item:hover, .autocomplete-item.active {
+      background: #eff6ff;
+    }
+    .station-code-badge {
+      background: var(--primary-navy);
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .station-city-badge {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-left: 6px;
+    }
+    .search-tab-btn {
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: transparent;
+      color: #cbd5e1;
+      transition: all 0.2s;
+    }
+    .search-tab-btn.active {
+      background: var(--accent-saffron);
+      border-color: var(--accent-saffron);
+      color: #0b2545;
+      font-weight: 700;
+    }
+    @media (max-width: 900px) {
+      .search-page-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        position: static;
+      }
+      #search-filter-form, #train-number-search-form {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="brand-logo">
+        <i class="fa-solid fa-train-subway"></i>
+        <span>Smart<span style="color: var(--accent-saffron);">Rail</span></span>
+      </a>
+
+      <button class="mobile-toggle"><i class="fa-solid fa-bars"></i></button>
+
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="search.html" class="active"><i class="fa-solid fa-magnifying-glass"></i> Search Trains</a></li>
+        <li><a href="pnr-status.html"><i class="fa-solid fa-ticket"></i> PNR Status</a></li>
+        <li><a href="live-tracking.html"><i class="fa-solid fa-satellite-dish"></i> Live Tracking</a></li>
+        <li><a href="food-order.html"><i class="fa-solid fa-utensils"></i> Food Order</a></li>
+        <li><a href="chatbot.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
+        <li><a href="emergency.html" class="nav-emergency"><i class="fa-solid fa-triangle-exclamation"></i> SOS 139</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-container"></div>
+    </div>
+  </nav>
+
+  <!-- Top Search Bar -->
+  <div style="background: var(--primary-dark); padding: 1.25rem 0 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <div class="container" style="padding-top: 0; padding-bottom: 0;">
+      <!-- Search Mode Tabs -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; align-items: center;">
+        <button type="button" id="tab-btn-route" class="search-tab-btn active" onclick="setSearchMode('route')">
+          <i class="fa-solid fa-route"></i> Route Search (From / To)
+        </button>
+        <button type="button" id="tab-btn-train" class="search-tab-btn" onclick="setSearchMode('train')">
+          <i class="fa-solid fa-magnifying-glass"></i> Search by Train # or Name
+        </button>
+      </div>
+
+      <!-- Route Search Form -->
+      <form id="search-filter-form" style="display: grid; grid-template-columns: 1.2fr auto 1.2fr 0.95fr 1.15fr 1fr 1fr auto; gap: 0.75rem; align-items: flex-end;">
+        <div class="form-group autocomplete-wrapper" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-location-dot" style="color: var(--accent-saffron);"></i> From Station</label>
+          <input type="text" id="input-from" class="form-control" placeholder="City or station name..." autocomplete="off" required>
+          <div id="dropdown-from" class="autocomplete-dropdown"></div>
+        </div>
+
+        <div>
+          <button type="button" id="btn-swap-stations" class="btn btn-outline" style="height: 44px; width: 44px; padding: 0; color: white; border-color: rgba(255,255,255,0.3);" title="Swap Stations">
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          </button>
+        </div>
+
+        <div class="form-group autocomplete-wrapper" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-location-arrow" style="color: #60a5fa;"></i> To Station</label>
+          <input type="text" id="input-to" class="form-control" placeholder="City or station name..." autocomplete="off" required>
+          <div id="dropdown-to" class="autocomplete-dropdown"></div>
+        </div>
+
+        <div class="form-group" id="group-date-mode" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-sliders" style="color: var(--accent-saffron);"></i> Date Mode</label>
+          <select id="select-date-mode" class="form-control" style="font-weight: 600; cursor: pointer;">
+            <option value="all">All Dates</option>
+            <option value="specific" selected>Specific Date</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="group-journey-date" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-calendar-days" style="color: var(--accent-saffron);"></i> Journey Date</label>
+          <div class="date-input-wrapper">
+            <input type="date" id="input-date" class="form-control" title="Choose Journey Date">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-couch"></i> Class</label>
+          <select id="select-class" class="form-control">
+            <option value="">All Classes</option>
+            <option value="3A">AC 3 Tier (3A)</option>
+            <option value="2A">AC 2 Tier (2A)</option>
+            <option value="1A">AC First Class (1A)</option>
+            <option value="SL">Sleeper (SL)</option>
+            <option value="CC">AC Chair Car (CC)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-tag"></i> Quota</label>
+          <select id="select-quota" class="form-control">
+            <option value="GN">General (GN)</option>
+            <option value="LD">Ladies (LD)</option>
+            <option value="SS">Senior Citizen (SS)</option>
+            <option value="TQ">Tatkal (TQ)</option>
+            <option value="PT">Premium Tatkal (PT)</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-accent" style="height: 44px; white-space: nowrap;">
+            <i class="fa-solid fa-magnifying-glass"></i> Search
+          </button>
+        </div>
+      </form>
+
+      <!-- Train Number/Name Search Form (Alternative Mode) -->
+      <form id="train-number-search-form" style="display: none; grid-template-columns: 1.8fr 1fr 1.15fr 1fr 1fr auto; gap: 0.75rem; align-items: flex-end;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-train" style="color: var(--accent-saffron);"></i> Train Number or Name</label>
+          <input type="text" id="input-train-query" class="form-control" placeholder="e.g. 12951, Rajdhani, Shatabdi, 12015..." autocomplete="off">
+        </div>
+
+        <div class="form-group" id="group-date-mode-train" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-sliders" style="color: var(--accent-saffron);"></i> Date Mode</label>
+          <select id="select-date-mode-train" class="form-control" style="font-weight: 600; cursor: pointer;">
+            <option value="all">All Dates</option>
+            <option value="specific" selected>Specific Date</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="group-journey-date-train" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-calendar-days" style="color: var(--accent-saffron);"></i> Journey Date</label>
+          <div class="date-input-wrapper">
+            <input type="date" id="input-date-train" class="form-control" title="Choose Journey Date">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-couch"></i> Class</label>
+          <select id="select-class-train" class="form-control">
+            <option value="">All Classes</option>
+            <option value="3A">AC 3 Tier (3A)</option>
+            <option value="2A">AC 2 Tier (2A)</option>
+            <option value="1A">AC First Class (1A)</option>
+            <option value="SL">Sleeper (SL)</option>
+            <option value="CC">AC Chair Car (CC)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label style="color: #cbd5e1;"><i class="fa-solid fa-tag"></i> Quota</label>
+          <select id="select-quota-train" class="form-control">
+            <option value="GN">General (GN)</option>
+            <option value="LD">Ladies (LD)</option>
+            <option value="SS">Senior Citizen (SS)</option>
+            <option value="TQ">Tatkal (TQ)</option>
+            <option value="PT">Premium Tatkal (PT)</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-accent" style="height: 44px; white-space: nowrap;">
+            <i class="fa-solid fa-magnifying-glass"></i> Find Train
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="container">
+    <div class="search-page-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+          <h3 style="font-size: 1.1rem; color: var(--primary-navy);"><i class="fa-solid fa-sliders"></i> Filters</h3>
+          <button onclick="resetFilters()" class="btn btn-sm btn-outline" style="border: none; padding: 2px 6px; font-size: 0.8rem;">Reset</button>
+        </div>
+
+        <!-- Coach Category -->
+        <div class="filter-group">
+          <h4>Coach Type</h4>
+          <label class="filter-option">
+            <input type="checkbox" id="filter-ac" class="filter-control">
+            <span>AC Coaches (1A, 2A, 3A, CC)</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" id="filter-sleeper" class="filter-control">
+            <span>Sleeper (SL)</span>
+          </label>
+        </div>
+
+        <!-- Departure Time -->
+        <div class="filter-group">
+          <h4>Departure Time</h4>
+          <label class="filter-option">
+            <input type="radio" name="departure-time" value="all" class="filter-control" checked>
+            <span>Any Time</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="departure-time" value="morning" class="filter-control">
+            <span>Morning (06:00 - 12:00)</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="departure-time" value="afternoon" class="filter-control">
+            <span>Afternoon (12:00 - 18:00)</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="departure-time" value="evening" class="filter-control">
+            <span>Evening (18:00 - 24:00)</span>
+          </label>
+          <label class="filter-option">
+            <input type="radio" name="departure-time" value="night" class="filter-control">
+            <span>Night (00:00 - 06:00)</span>
+          </label>
+        </div>
+
+        <!-- Running Day Filter -->
+        <div class="filter-group">
+          <h4>Running Day</h4>
+          <select id="filter-running-day" class="form-control filter-control">
+            <option value="all">All Days</option>
+            <option value="Sun">Sunday</option>
+            <option value="Mon">Monday</option>
+            <option value="Tue">Tuesday</option>
+            <option value="Wed">Wednesday</option>
+            <option value="Thu">Thursday</option>
+            <option value="Fri">Friday</option>
+            <option value="Sat">Saturday</option>
+          </select>
+        </div>
+
+        <!-- Operating Status Toggle -->
+        <div class="filter-group" id="filter-group-non-running">
+          <h4>Operating Status</h4>
+          <label class="filter-option" style="cursor: pointer;">
+            <input type="checkbox" id="toggle-show-non-running" class="filter-control">
+            <span style="font-size: 0.85rem;">Show trains not running on selected date</span>
+          </label>
+        </div>
+
+        <!-- Sort By -->
+        <div class="filter-group">
+          <h4>Sort Trains By</h4>
+          <select id="sort-by" class="form-control filter-control">
+            <option value="cheapest">Cheapest Fare</option>
+            <option value="earliest">Earliest Departure</option>
+            <option value="duration">Shortest Duration</option>
+            <option value="runs_selected">Runs on Selected Date</option>
+            <option value="availability">Maximum Seats Available</option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- Results Stream -->
+      <section>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem;">
+          <h2 style="font-size: 1.4rem; color: var(--primary-navy);" id="search-results-heading">Available Trains</h2>
+          <span class="badge" id="results-count-badge" style="background: rgba(19, 64, 116, 0.1); color: var(--primary-navy); font-size: 0.85rem;">0 Trains Found</span>
+        </div>
+
+        <!-- Quick Date Navigation & Week Strip (Visible in Specific Date mode) -->
+        <div id="date-navigation-container" style="display: none; background: white; border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <button type="button" id="btn-prev-day" class="btn btn-sm btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                <i class="fa-solid fa-chevron-left"></i> Previous Day
+              </button>
+              <button type="button" id="btn-today" class="btn btn-sm btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                Today
+              </button>
+              <button type="button" id="btn-next-day" class="btn btn-sm btn-outline" style="font-size: 0.8rem; padding: 4px 10px;">
+                Next Day <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <div id="selected-journey-date-display" style="font-weight: 700; color: var(--primary-navy); font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-regular fa-calendar-check" style="color: var(--accent-saffron);"></i>
+              <span id="journey-date-text">Sunday, 04 Oct 2026</span>
+            </div>
+          </div>
+          <!-- Weekly Quick Day Chips -->
+          <div id="week-strip-container" style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 2px;">
+            <!-- Rendered by search.js -->
+          </div>
+        </div>
+
+        <div id="train-results-container">
+          <!-- Populated by search.js -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-bottom" style="border: none; padding: 2rem 1.5rem;">
+      <div class="footer-bottom-left">
+        <div class="footer-copyright">
+          &copy; 2026 SmartRail &mdash; Smart Indian Railway Ticket Reservation System. All Rights Reserved.
+        </div>
+        <div class="footer-sub-copyright">
+          &copy; 2026 Krish Lakhera. All Rights Reserved.
+        </div>
+      </div>
+      <div class="footer-bottom-right">
+        <div class="footer-credit">
+          Designed &amp; Developed by <span class="footer-author">Krish Lakhera</span>
+        </div>
+        <div class="footer-platform-tag">
+          AI-Powered Railway Reservation &amp; Passenger Services Platform
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/search.js"></script>
+</body>
+</html>

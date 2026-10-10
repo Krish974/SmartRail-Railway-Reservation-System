@@ -1,0 +1,284 @@
+/* SMART RAILWAY SYSTEM - RESPONSIVE STYLES */
+
+/* Large Tablets & Small Laptops (<= 1024px) */
+@media (max-width: 1024px) {
+  .hero-section {
+    min-height: 480px;
+    padding: 50px 5% 90px;
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(5, 29, 58, 0.97) 0%,
+        rgba(5, 29, 58, 0.9) 45%,
+        rgba(5, 29, 58, 0.55) 75%,
+        rgba(5, 29, 58, 0.2) 100%
+      ),
+      url('../assets/images/vande_bharat_hero.webp');
+    background-position: center right;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .search-widget-container {
+    width: 95%;
+    margin-top: -55px;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-grid .search-btn-home,
+  .search-grid .btn {
+    grid-column: span 2;
+  }
+}
+
+/* Responsive Navigation (<= 1150px) */
+@media (max-width: 1150px) {
+  .nav-container.nav-three-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 58px;
+  }
+
+  .nav-brand {
+    min-width: auto;
+  }
+
+  .nav-actions {
+    min-width: auto;
+    gap: 0.5rem;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 58px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    border-bottom: 1px solid var(--border-light);
+    transform: translateY(-150%);
+    transition: transform var(--transition-normal);
+    gap: 0.85rem;
+    align-items: stretch;
+    z-index: 1005;
+  }
+
+  .nav-links.show {
+    transform: translateY(0);
+  }
+}
+
+/* Tablets (<= 768px) */
+@media (max-width: 768px) {
+
+  /* Top Information Bar Horizontal Scroll on Mobile */
+  .top-bar-content {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.35rem 1rem;
+    gap: 1rem;
+  }
+
+  .top-bar-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-bar-item {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .top-bar-divider {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding: 40px 1.25rem 75px;
+    background-image:
+      linear-gradient(
+        180deg,
+        rgba(5, 29, 58, 0.96) 0%,
+        rgba(5, 29, 58, 0.9) 55%,
+        rgba(5, 29, 58, 0.8) 100%
+      ),
+      url('../assets/images/vande_bharat_hero.webp');
+    background-position: center right;
+    background-size: cover;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-btn-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-btn-group .btn-hero-primary,
+  .hero-btn-group .btn-hero-secondary {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .search-widget-container {
+    width: calc(100% - 2rem);
+    margin: -45px auto 2rem;
+  }
+
+  .search-widget {
+    padding: 1.25rem 1rem;
+    border-radius: 18px;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .search-grid .search-btn-home,
+  .search-grid .btn {
+    grid-column: span 1;
+    width: 100%;
+    height: 46px;
+  }
+
+  .search-widget-lower {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-lower-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compartment-bay {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .aisle-gap {
+    writing-mode: horizontal-tb;
+    height: 24px;
+  }
+
+  .seat-action-container {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .selected-summary {
+    justify-content: space-between;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1.15rem;
+    text-align: center;
+    align-items: center;
+    padding-top: 1.5rem;
+  }
+
+  .footer-bottom-left,
+  .footer-bottom-right {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+/* Mobile Devices (<= 480px / 360px - 390px) */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.6rem 1rem;
+  }
+
+  .brand-logo {
+    font-size: 1.15rem;
+  }
+
+  .container {
+    padding: 1.25rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.65rem;
+  }
+
+  .coach-hull {
+    padding: 1rem 0.5rem;
+  }
+
+  .main-bay {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .side-bay {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .seat {
+    min-height: 52px;
+    padding: 0.4rem 0.2rem;
+  }
+
+  .seat-number {
+    font-size: 0.85rem;
+  }
+
+  .seat-berth {
+    font-size: 0.55rem;
+  }
+
+  .modal-dialog {
+    max-width: 95vw;
+    margin: 0.5rem;
+  }
+}
