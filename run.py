@@ -14,16 +14,18 @@ sys.path.insert(0, BASE_DIR)
 from backend.app import create_app
 from backend.utils.db_connection import get_db_type
 
+# Expose WSGI application object for Gunicorn, Waitress, and cloud platforms
+app = create_app()
+
 if __name__ == '__main__':
     if hasattr(sys.stdout, 'reconfigure'):
         sys.stdout.reconfigure(encoding='utf-8')
     if hasattr(sys.stderr, 'reconfigure'):
         sys.stderr.reconfigure(encoding='utf-8')
 
-    app = create_app()
     db_type = get_db_type()
     port = int(os.environ.get('PORT', 5000))
-    debug = os.environ.get('FLASK_DEBUG', '1') == '1'
+    debug = os.environ.get('FLASK_DEBUG', '0') == '1'
 
     print("=" * 70)
     print("[*] SMART INDIAN RAILWAY TICKET RESERVATION SYSTEM")

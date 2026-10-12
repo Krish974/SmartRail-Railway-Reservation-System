@@ -11,10 +11,24 @@ if os.path.exists(dotenv_path):
     load_dotenv(dotenv_path)
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'smart-indian-railway-secret-key-2026-secure')
+    SECRET_KEY = os.environ.get('SECRET_KEY', '').strip()
+    if not SECRET_KEY:
+        if os.environ.get('FLASK_ENV', '').lower() == 'production':
+            raise RuntimeError(
+                "[SECURITY FATAL] SECRET_KEY environment variable is required in production! "
+                "Please configure a strong, unique SECRET_KEY in your hosting dashboard."
+            )
+        SECRET_KEY = 'smart-indian-railway-dev-key-2026'
     
     # Database Settings
-    DB_TYPE = os.environ.get('DB_TYPE', 'auto') # 'mysql', 'sqlite', or 'auto'
+    DATABASE_URL = os.environ.get('DATABASE_URL', os.environ.get('POSTGRES_URL', '')).strip()
+    # Normalize postgres:// to postgresql:// if needed
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+
+    # DB_TYPE: 'postgres', 'mysql', 'sqlite', or 'auto'
+    # If DATABASE_URL is provided, default DB_TYPE to 'postgres'
+    DB_TYPE = os.environ.get('DB_TYPE', 'postgres' if DATABASE_URL else 'auto').lower()
     DB_HOST = os.environ.get('DB_HOST', 'localhost')
     DB_PORT = int(os.environ.get('DB_PORT', 3306))
     DB_USER = os.environ.get('DB_USER', 'root')
@@ -27,6 +41,14 @@ class Config:
     # Session / Token Settings
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
     SEAT_LOCK_DURATION_SECONDS = 300  # 5 minutes seat lock
+    
+    # Production Cookie Security
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SECURE = (
+        os.environ.get('SESSION_COOKIE_SECURE', '0') == '1'
+        or os.environ.get('FLASK_ENV', '').lower() == 'production'
+    )
     
     # CORS
     CORS_HEADERS = 'Content-Type'

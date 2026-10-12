@@ -2,8 +2,13 @@
  * SMART INDIAN RAILWAY SYSTEM - CORE UTILITIES & APPLICATION RUNTIME
  */
 
-// Determine API Base URL dynamically (works both when served by Flask or static server)
-const API_BASE_URL = window.location.port === '5000' || window.location.port === ''
+// Determine API Base URL dynamically (works both when served by Flask on any cloud/local port, or via local static dev servers)
+const isLocalStaticDevServer = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  && window.location.port
+  && window.location.port !== '5000'
+  && window.location.port !== '';
+
+const API_BASE_URL = (!window.location.protocol.startsWith('file:') && !isLocalStaticDevServer)
   ? '/api'
   : 'http://127.0.0.1:5000/api';
 

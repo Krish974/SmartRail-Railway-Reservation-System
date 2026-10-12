@@ -81,7 +81,8 @@ def create_app():
 
     @app.errorhandler(500)
     def server_error(e):
-        return api_response(False, f"Internal server error occurred: {str(e)}", None, 500)
+        msg = "An internal server error occurred. Please try again later." if os.environ.get('FLASK_ENV', '').lower() == 'production' else f"Internal server error occurred: {str(e)}"
+        return api_response(False, msg, None, 500)
 
     @app.route('/api/health', methods=['GET'])
     def health_check():

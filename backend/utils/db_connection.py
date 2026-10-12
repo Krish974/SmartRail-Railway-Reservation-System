@@ -3,6 +3,15 @@ import sqlite3
 import re
 from backend.config import Config
 
+# Optional PostgreSQL driver
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
+    RealDictCursor = None
+
 # Optional MySQL driver
 try:
     import mysql.connector
@@ -22,7 +31,36 @@ def get_db_type():
     if Config.DB_TYPE == 'sqlite':
         _active_db_type = 'sqlite'
         return _active_db_type
+
+    # 1. Check PostgreSQL if configured or if DATABASE_URL is set
+    if (Config.DATABASE_URL or Config.DB_TYPE in ('postgres', 'postgresql')) and POSTGRES_AVAILABLE:
+        try:
+            if Config.DATABASE_URL:
+                conn = psycopg2.connect(Config.DATABASE_URL, connect_timeout=4)
+            else:
+                conn = psycopg2.connect(
+                    host=Config.DB_HOST,
+                    port=Config.DB_PORT if Config.DB_PORT != 3306 else 5432,
+                    user=Config.DB_USER,
+                    password=Config.DB_PASSWORD,
+                    dbname=Config.DB_NAME,
+                    connect_timeout=4
+                )
+            conn.close()
+            _active_db_type = 'postgres'
+            print("[DB] Successfully connected to PostgreSQL production database.")
+            return _active_db_type
+        except Exception as e:
+            err_msg = f"[DB FATAL ERROR] PostgreSQL connection failed: {e}."
+            if Config.DATABASE_URL:
+                err_msg += " Verify that your DATABASE_URL is correct and the PostgreSQL service is running."
+            if Config.DATABASE_URL or Config.DB_TYPE in ('postgres', 'postgresql') or os.environ.get('FLASK_ENV', '').lower() == 'production':
+                raise RuntimeError(f"{err_msg} Silent fallback to local SQLite is disabled in production to prevent data loss.")
+            print(f"[DB WARNING] {e}. Falling back to local SQLite for offline development.")
+            _active_db_type = 'sqlite'
+            return _active_db_type
     
+    # 2. Check MySQL
     if MYSQL_AVAILABLE and Config.DB_TYPE in ('mysql', 'auto'):
         try:
             conn = mysql.connector.connect(
@@ -39,18 +77,32 @@ def get_db_type():
             return _active_db_type
         except Exception as e:
             if Config.DB_TYPE == 'mysql':
-                print(f"[DB WARNING] MySQL connection failed: {e}")
-                # Still fallback to sqlite so server doesn't crash on demo
+                if os.environ.get('FLASK_ENV', '').lower() == 'production':
+                    raise RuntimeError(f"[DB FATAL ERROR] MySQL connection failed in production: {e}. Silent fallback to local SQLite is disabled.")
+                print(f"[DB WARNING] MySQL connection failed: {e}. Falling back to local SQLite.")
                 _active_db_type = 'sqlite'
                 return _active_db_type
     
+    if os.environ.get('FLASK_ENV', '').lower() == 'production' and Config.DB_TYPE != 'sqlite':
+        raise RuntimeError("[DB FATAL ERROR] In production, an external persistent database (PostgreSQL via DATABASE_URL or MySQL) is required. Silent fallback to ephemeral SQLite is disabled to prevent data loss.")
+
     _active_db_type = 'sqlite'
-    print("[DB INFO] MySQL not active or unreachable. Falling back to local SQLite database with seeded data seamlessly.")
+    print("[DB INFO] PostgreSQL/MySQL not active or unreachable. Falling back to local SQLite database with seeded data seamlessly.")
     return _active_db_type
 
 def get_connection():
     db_type = get_db_type()
-    if db_type == 'mysql':
+    if db_type == 'postgres':
+        if Config.DATABASE_URL:
+            return psycopg2.connect(Config.DATABASE_URL)
+        return psycopg2.connect(
+            host=Config.DB_HOST,
+            port=Config.DB_PORT if Config.DB_PORT != 3306 else 5432,
+            user=Config.DB_USER,
+            password=Config.DB_PASSWORD,
+            dbname=Config.DB_NAME
+        )
+    elif db_type == 'mysql':
         return mysql.connector.connect(
             host=Config.DB_HOST,
             port=Config.DB_PORT,
@@ -67,14 +119,57 @@ def get_connection():
 
 def execute_query(sql, params=None, fetchone=False, fetchall=False, commit=False):
     """
-    Unified query runner. Works seamlessly across MySQL and SQLite.
-    Parameters in sql should use '%s' placeholder syntax.
+    Unified query runner. Works seamlessly across PostgreSQL, MySQL, and SQLite.
+    Parameters in sql use '%s' placeholder syntax.
     """
     db_type = get_db_type()
     conn = get_connection()
     cursor = None
     try:
-        if db_type == 'mysql':
+        if db_type == 'postgres':
+            cursor = conn.cursor(cursor_factory=RealDictCursor)
+            
+            # Auto-handle returning id for INSERT if lastrowid is expected
+            is_insert = sql.strip().upper().startswith('INSERT')
+            has_returning = 'RETURNING' in sql.upper()
+            query_sql = sql
+            return_id = False
+            
+            if is_insert and not has_returning and not fetchone and not fetchall:
+                query_sql = sql.rstrip().rstrip(';') + ' RETURNING id'
+                return_id = True
+                
+            try:
+                cursor.execute(query_sql, params or ())
+            except Exception:
+                if return_id:
+                    conn.rollback()
+                    query_sql = sql
+                    return_id = False
+                    cursor.execute(query_sql, params or ())
+                else:
+                    raise
+
+            last_id = None
+            if return_id:
+                try:
+                    res_row = cursor.fetchone()
+                    if res_row and 'id' in res_row:
+                        last_id = res_row['id']
+                except Exception:
+                    pass
+
+            if commit:
+                conn.commit()
+            if fetchone:
+                res = cursor.fetchone()
+                return dict(res) if res else None
+            if fetchall:
+                res = cursor.fetchall()
+                return [dict(r) for r in res] if res else []
+            return last_id
+
+        elif db_type == 'mysql':
             cursor = conn.cursor(dictionary=True)
             cursor.execute(sql, params or ())
             if commit:
@@ -114,10 +209,14 @@ def execute_query(sql, params=None, fetchone=False, fetchall=False, commit=False
 
 def init_db():
     """
-    Initializes SQLite fallback database if MySQL is not being used or if tables do not exist.
+    Initializes SQLite fallback database if MySQL/Postgres is not being used or if tables do not exist.
+    Never overwrites or deletes existing production or local data.
     """
     db_type = get_db_type()
-    if db_type == 'sqlite':
+    if db_type == 'postgres':
+        print("[DB INFO] PostgreSQL active. Preserving existing production database without automatic modifications.")
+        return
+    elif db_type == 'sqlite':
         os.makedirs(os.path.dirname(Config.SQLITE_PATH), exist_ok=True)
         conn = sqlite3.connect(Config.SQLITE_PATH)
         cursor = conn.cursor()
@@ -522,6 +621,8 @@ def ensure_route_cache_columns():
     Also marks existing trains with >= 2 stops as 'complete'.
     """
     db_type = get_db_type()
+    if db_type == 'postgres':
+        return
     conn = get_connection()
     cursor = conn.cursor() if db_type == 'sqlite' else conn.cursor(dictionary=True)
     try:
@@ -598,6 +699,8 @@ def ensure_food_order_tables():
     And seeds initial verified partner demo vendors and categorized menu if empty.
     """
     db_type = get_db_type()
+    if db_type == 'postgres':
+        return
     conn = get_connection()
     cursor = conn.cursor() if db_type == 'sqlite' else conn.cursor(dictionary=True)
     try:
